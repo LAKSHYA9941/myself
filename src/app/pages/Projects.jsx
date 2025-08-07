@@ -1,0 +1,153 @@
+"use client";
+
+import React, { useRef } from 'react';
+import { useGSAP } from '@gsap/react';
+import gsap from 'gsap';
+import ScrollTrigger from 'gsap/ScrollTrigger';
+import { FiGithub, FiExternalLink } from 'react-icons/fi';
+import { SiMongodb, SiExpress, SiReact, SiTailwindcss, SiFirebase, SiTypescript } from 'react-icons/si';
+import Image from 'next/image';
+import FloatingBalls from '../components/Floatingballs';
+
+gsap.registerPlugin(ScrollTrigger);
+
+const projects = [
+  {
+    name: 'Note-Maker',
+    tagline: 'Full-stack notes app with JWT auth, full CRUD and dark-mode glow.',
+    live: 'https://mern-notemaker.onrender.com',
+    repo: 'https://github.com/LAKSHYA9941/MERN-Notemaker',
+    stack: [
+      { icon: <SiReact className="text-[#61DAFB]" />, name: 'React + Vite' },
+      { icon: <SiExpress className="text-white" />, name: 'Express' },
+      { icon: <SiMongodb className="text-[#4DB33D]" />, name: 'MongoDB' },
+      { icon: <SiTailwindcss className="text-[#06B6D4]" />, name: 'Tailwind CSS' },
+    ],
+    bullets: [
+      'Secure JWT auth & bcrypt hashing',
+      'Pin, search, filter notes in real-time',
+      'Responsive glass-morphism UI with dark-mode glow',
+      'Clean REST API & reusable React hooks',
+    ],
+    image: '/notemakeimg.jpeg',
+  },
+  {
+    name: 'Ek-Cup-Chai',
+    tagline: 'Patron-powered social platform for creators (WIP).',
+    live: undefined,
+    repo: undefined,
+    stack: [
+      { icon: <SiFirebase className="text-[#FFCA28] bg-[#fff0c4] border rounded-4xl drop-shadow-2xl " />, name: 'Firebase' },
+      { icon: <SiReact className="text-[#61DAFB]" />, name: 'React 19' },
+      { icon: <SiTypescript className="text-[#3178C6]" />, name: 'TypeScript' },
+      { icon: <SiTailwindcss className="text-[#06B6D4]" />, name: 'Tailwind v4' },
+    ],
+    bullets: [
+      'Google Auth + Firestore real-time DB',
+      'QR-code tipping & patron badges',
+      'Zustand state + motion page transitions',
+      'Image uploads with Firebase Storage',
+    ],
+    image: '/chaiproject.png',
+  },
+  {
+    name: 'Currency Converter',
+    tagline: 'Real-time currency exchange in a sleek, responsive UI.',
+    live: 'https://currency190.netlify.app',
+    repo: 'https://github.com/LAKSHYA9941/Currency-Converter',
+    stack: [
+      { icon: <SiReact className="text-[#61DAFB]" />, name: 'React + Vite' },
+      { icon: <SiTailwindcss className="text-[#06B6D4]" />, name: 'Tailwind CSS' },
+    ],
+    bullets: [
+      'Fetches live exchange rates via trusted API',
+      'Instant conversion while typing',
+      'Supports 150+ global currencies',
+      'Mobile-first responsive design',
+    ],
+    image: '/currency_converter.png',
+  },
+];
+
+
+/* ---------- staggered card reveal ---------- */
+const Card = ({ p, index }) => {
+  const cardRef = useRef(null);
+  const imgRef   = useRef(null);
+  const txtRef   = useRef(null);
+
+  useGSAP(() => {
+    gsap.timeline({ scrollTrigger: { trigger: cardRef.current, start: 'top 90%' } })
+      .fromTo(
+        cardRef.current,
+        { opacity: 0, y: 80, scale: 0.9 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.8, ease: 'power2.out' }
+      )
+      .fromTo(
+        imgRef.current,
+        { x: -100, opacity: 0 },
+        { x: 0, opacity: 1, duration: 0.6, ease: 'power2.out' },
+        '-=0.4'
+      )
+      .fromTo(
+        txtRef.current.children,
+        { y: 20, opacity: 0 },
+        { y: 0, opacity: 1, stagger: 0.08, duration: 0.4, ease: 'power2.out' },
+        '-=0.3'
+      );
+  });
+
+  return (
+    <div ref={cardRef} className="grid md:grid-cols-5 gap-6 items-center">
+      {/* IMAGE */}
+      <div ref={imgRef} className="md:col-span-2 rounded-xl overflow-hidden shadow-xl">
+        <Image src={p.image} alt={p.name} width={400} height={225} className="w-full h-auto aspect-video" />
+      </div>
+
+      {/* CONTENT */}
+      <div ref={txtRef} className="md:col-span-3 space-y-3">
+        <h3 className="text-2xl font-semibold text-white">{p.name}</h3>
+        <p className="text-slate-300 text-sm">{p.tagline}</p>
+        <ul className="text-sm text-slate-400 list-disc list-inside space-y-1">
+          {p.bullets.map(b => <li key={b}>{b}</li>)}
+        </ul>
+        <div className="flex items-center gap-x-3 text-xl">
+          {p.stack.map(s => (
+            <span key={s.name} title={s.name} className="inline-block group bg-gradient-to-b from-stone-300/40 to-transparent p-1 rounded-lg shadow-md transition hover:scale-110">
+              {s.icon}
+            </span>
+          ))}
+        </div>
+        <div className="flex gap-x-4">
+          {p.live && (
+            <a href={p.live} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-sm font-medium text-indigo-400 hover:underline">
+              <FiExternalLink /> Live
+            </a>
+          )}
+          {p.repo && (
+            <a href={p.repo} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-sm font-medium text-slate-400 hover:underline">
+              <FiGithub /> Source
+            </a>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+/* ---------- main page ---------- */
+const Projects =()=> {
+  return (
+    <div className="relative min-h-screen overflow-hidden">
+      <FloatingBalls count={15} />
+
+      <section className="max-w-7xl mx-auto px-4 py-10 space-y-16">
+        {projects.map((p, idx) => (
+          <Card key={p.name} p={p} index={idx} />
+        ))}
+      </section>
+    </div>
+  );
+}
+
+export default Projects;
