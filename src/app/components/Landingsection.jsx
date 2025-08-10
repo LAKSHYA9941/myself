@@ -7,33 +7,42 @@ import Image from 'next/image';
 import Link from "next/link";
 gsap.registerPlugin(TextPlugin);
 
-
 const LandingSection = () => {
   const textRef = useRef(null);
+  const imgRef = useRef(null);
 
-  // 3️⃣  run animation once after first paint
+  /* ---------- TEXT TYPEWRITER ---------- */
   useEffect(() => {
     const lines = [
       "I'm a full-stack developer",
       "I'm passionate about creating innovative solutions",
-      "The code i write is not just functional, but also elegant and efficient.",
+      "The code I write is not just functional, but also elegant and efficient."
     ];
 
     gsap.to(textRef.current, {
-      duration: lines.join(" ").length * 0.05,   // speed based on char count
-      text: {
-        value: lines.join("\n"),                  // newline keeps <br/> effect
-        delimiter: ""                             // char-by-char reveal
-      },
+      duration: lines.join(" ").length * 0.05,
+      text: { value: lines.join("\n"), delimiter: "" },
       ease: "none"
     });
+  }, []);
+
+  /* ---------- IMAGE GSAP MAGIC ---------- */
+  useEffect(() => {
+    const tl = gsap.timeline({ delay: 0.4 });
+
+    tl.fromTo(
+      imgRef.current,
+      { opacity: 0, scale: 0.5, rotate: -15, y: 100, filter: "blur(10px)" },
+      { opacity: 1, scale: 1, rotate: 0, y: 0, filter: "blur(0px)", duration: 1.8, ease: "back.out(1.7)" }
+    )
+      .to(imgRef.current, { y: "+=8", repeat: -1, yoyo: true, duration: 3, ease: "sine.inOut" }, ">-0.5");
   }, []);
 
   return (
     <>
       <section className="min-h-full flex items-center justify-center px-6 py-6">
         <div className="max-w-7xl w-full flex flex-col md:flex-row items-center md:items-center justify-between gap-8 md:gap-12">
-          {/* Left side - Text and buttons with margin */}
+          {/* LEFT SIDE */}
           <div className="flex-1 md:ml-8 space-y-6 text-center md:text-left z-10">
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white">
               Hi, I'm{" "}
@@ -43,12 +52,11 @@ const LandingSection = () => {
               <span className="inline-block animate-wave">👋</span>
             </h1>
 
-            <p className="text-lg sm:text-xl text-zinc-50 min-h-[4rem]"
+            <p
+              className="text-lg sm:text-xl text-zinc-50 min-h-[4rem]"
               ref={textRef}
-              style={{ whiteSpace: "pre-line" }} // allows <br/> effect
-            >
-
-            </p>
+              style={{ whiteSpace: "pre-line" }}
+            />
 
             <div className="flex flex-col sm:flex-row justify-center md:justify-start gap-4 pt-4">
               <Link href="/contacts">
@@ -61,28 +69,33 @@ const LandingSection = () => {
               <Link href="/projects">
                 <StyledWrapper2>
                   <div className="container">
-                    <button className="button">explore Projects</button>
+                    <button className="button">Explore Projects</button>
                   </div>
                 </StyledWrapper2>
               </Link>
             </div>
           </div>
 
-          {/* Right side - Image taking 3/4 of full height */}
-          <div className="flex-shrink-0 w-full md:w-auto flex justify-center">
-            <Image src="/herowithbg.png" width={400} height={400} alt="Lakshya Developer Illustration" className="h-[50vh] md:h-[75vh] w-auto object-contain rounded-3xl drop-shadow-[0_0_8px_#fff]" />
+          {/* RIGHT SIDE – GSAP ENHANCED */}
+          <div ref={imgRef} className="flex-shrink-0 w-full md:w-auto flex justify-center">
+            <Image
+              src="/herowithbg.png"
+              width={400}
+              height={400}
+              alt="Lakshya Developer Illustration"
+              className="h-[50vh] md:h-[75vh] w-auto object-contain rounded-3xl drop-shadow-[0_0_8px_#fff]"
+            />
           </div>
         </div>
       </section>
     </>
-  )
+  );
 };
 
 export default LandingSection;
 
-
-
-/* Fixed styled button with working glow effect */
+/* ---------------------------------- */
+/* BUTTON STYLES – UNCHANGED */
 const StyledWrapper = styled.div`
   button {
     font-size: 1.4em;
@@ -126,6 +139,7 @@ const StyledWrapper = styled.div`
     opacity: 1;
   }
 `;
+
 const StyledWrapper2 = styled.div`
   button {
     font-size: 1.4em;

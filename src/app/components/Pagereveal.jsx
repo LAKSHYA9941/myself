@@ -5,6 +5,7 @@ import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 
 export default function PageReveal({ children }) {
+
   const ref = useRef(null);
 
   useGSAP(() => {

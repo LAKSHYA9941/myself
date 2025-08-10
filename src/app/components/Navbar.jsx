@@ -69,13 +69,14 @@ function Navbar() {
       <nav ref={menuRef} className="px-4 lg:px-6 py-3">
         <div className="flex justify-between items-center mx-auto max-w-screen-xl">
           {/* Logo */}
-          <Link href="/" className="flex items-center">
+          <Link href="/"  className="flex items-center" prefetch>
             <Image
               src="/LOGO.png"
               width={48}
               height={48}
               className="mr-3 h-12 w-auto rounded-lg border border-white/20 bg-gradient-to-br from-white/10 via-white/5 to-transparent p-1 shadow-[0_4px_12px_#00000040,0_0_15px_#ffffff40] backdrop-blur-sm antialiased"
               alt="Logo"
+              quality={90}
             />
           </Link>
 
@@ -94,7 +95,7 @@ function Navbar() {
               ].join(' ');
               return (
                 <li key={path}>
-                  <Link id="desktopNav" href={href} className={linkClass}>
+                  <Link id="desktopNav" href={href} className={linkClass} prefetch>
                     {label}
                   </Link>
                 </li>
@@ -130,6 +131,7 @@ function Navbar() {
                     href={href}
                     onClick={toggleMenu}
                     className="text-lg uppercase text-slate-300 hover:text-white"
+                    prefetch
                   >
                     {label}
                   </Link>
