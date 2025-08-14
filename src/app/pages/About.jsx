@@ -8,6 +8,8 @@ import Certis from '../components/Certis';
 import Education from '../components/Education';
 import Image from 'next/image';
 import FloatingBalls from '../components/Floatingballs';
+import { useRevealer } from '../Hooks/useRevealer';
+
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -76,10 +78,11 @@ export default function About() {
         'I am a self-motivated and hardworking individual who thrives in a dynamic and fast-paced environment. I am always looking for new opportunities to expand my skills and knowledge in web development.',
         'I enjoy working on challenging projects that require innovative problem-solving and collaboration. My goal is to continuously learn and grow in the field of web development.',
     ];
-
+    useRevealer();
     return (
         <div className="relative min-h-screen overflow-hidden text-white">
             <FloatingBalls count={5}/>
+            <div className="revealer"/>
             <div className="flex flex-col lg:flex-row items-start gap-10 max-w-7xl mx-auto px-6 py-12">
                 {/* animated text */}
                 <div ref={textRef} className="flex-1 space-y-6 text-left text-base leading-relaxed">

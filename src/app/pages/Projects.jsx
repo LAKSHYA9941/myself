@@ -8,6 +8,7 @@ import { FiGithub, FiExternalLink } from 'react-icons/fi';
 import { SiMongodb, SiExpress, SiReact, SiTailwindcss, SiFirebase, SiTypescript } from 'react-icons/si';
 import Image from 'next/image';
 import FloatingBalls from '../components/Floatingballs';
+import { useRevealer } from '../Hooks/useRevealer';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -29,7 +30,7 @@ const projects = [
       'Responsive glass-morphism UI with dark-mode glow',
       'Clean REST API & reusable React hooks',
     ],
-    image: '/notemakeimg.jpeg',
+    image: 'https://res.cloudinary.com/cloud4lakshya/image/upload/v1754839921/notemakeimg_gjcou7.jpg',
   },
   {
     name: 'Ek-Cup-Chai',
@@ -48,7 +49,7 @@ const projects = [
       'Zustand state + motion page transitions',
       'Image uploads with Firebase Storage',
     ],
-    image: '/chaiproject.png',
+    image: 'https://res.cloudinary.com/cloud4lakshya/image/upload/v1754839921/chaiproject_bnylai.png',
   },
   {
     name: 'Currency Converter',
@@ -65,16 +66,15 @@ const projects = [
       'Supports 150+ global currencies',
       'Mobile-first responsive design',
     ],
-    image: '/currency_converter.png',
+    image: 'https://res.cloudinary.com/cloud4lakshya/image/upload/v1754839922/currency_converter_mns6dg.png',
   },
 ];
-
 
 /* ---------- staggered card reveal ---------- */
 const Card = ({ p, index }) => {
   const cardRef = useRef(null);
-  const imgRef   = useRef(null);
-  const txtRef   = useRef(null);
+  const imgRef = useRef(null);
+  const txtRef = useRef(null);
 
   useGSAP(() => {
     gsap.timeline({ scrollTrigger: { trigger: cardRef.current, start: 'top 90%' } })
@@ -98,55 +98,68 @@ const Card = ({ p, index }) => {
   });
 
   return (
-    <div ref={cardRef} className="grid md:grid-cols-5 gap-6 items-center">
-      {/* IMAGE */}
-      <div ref={imgRef} className="md:col-span-2 rounded-xl overflow-hidden shadow-xl">
-        <Image src={p.image} alt={p.name} width={400} height={225} className="w-full h-auto aspect-video" />
-      </div>
+    <>
+      <div ref={cardRef} className="grid md:grid-cols-5 gap-6 items-center">
+        {/* IMAGE */}
+        <div ref={imgRef} className="md:col-span-2 rounded-xl overflow-hidden shadow-xl">
+          <Image
+            src={p.image}
+            alt={p.name}
+            width={400} // Set the width of the image
+            height={225} // Set the height of the image
+            className="w-full h-auto aspect-video"
+            loading="lazy"
+          />
+        </div>
 
-      {/* CONTENT */}
-      <div ref={txtRef} className="md:col-span-3 space-y-3">
-        <h3 className="text-2xl font-semibold text-white">{p.name}</h3>
-        <p className="text-slate-300 text-sm">{p.tagline}</p>
-        <ul className="text-sm text-slate-400 list-disc list-inside space-y-1">
-          {p.bullets.map(b => <li key={b}>{b}</li>)}
-        </ul>
-        <div className="flex items-center gap-x-3 text-xl">
-          {p.stack.map(s => (
-            <span key={s.name} title={s.name} className="inline-block group bg-gradient-to-b from-stone-300/40 to-transparent p-1 rounded-lg shadow-md transition hover:scale-110">
-              {s.icon}
-            </span>
-          ))}
-        </div>
-        <div className="flex gap-x-4">
-          {p.live && (
-            <a href={p.live} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-sm font-medium text-indigo-400 hover:underline">
-              <FiExternalLink /> Live
-            </a>
-          )}
-          {p.repo && (
-            <a href={p.repo} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-sm font-medium text-slate-400 hover:underline">
-              <FiGithub /> Source
-            </a>
-          )}
+        {/* CONTENT */}
+        <div ref={txtRef} className="md:col-span-3 space-y-3">
+          <h3 className="text-2xl font-semibold text-white">{p.name}</h3>
+          <p className="text-slate-300 text-sm">{p.tagline}</p>
+          <ul className="text-sm text-slate-400 list-disc list-inside space-y-1">
+            {p.bullets.map(b => <li key={b}>{b}</li>)}
+          </ul>
+          <div className="flex items-center gap-x-3 text-xl">
+            {p.stack.map(s => (
+              <span key={s.name} title={s.name} className="inline-block group bg-gradient-to-b from-stone-300/40 to-transparent p-1 rounded-lg shadow-md transition hover:scale-110">
+                {s.icon}
+              </span>
+            ))}
+          </div>
+          <div className="flex gap-x-4">
+            {p.live && (
+              <a href={p.live} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-sm font-medium text-indigo-400 hover:underline">
+                <FiExternalLink /> Live
+              </a>
+            )}
+            {p.repo && (
+              <a href={p.repo} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-sm font-medium text-slate-400 hover:underline">
+                <FiGithub /> Source
+              </a>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
 /* ---------- main page ---------- */
-const Projects =()=> {
+const Projects = () => {
+  useRevealer();
   return (
-    <div className="relative min-h-screen overflow-hidden">
-      <FloatingBalls count={15} />
+    <>
+      <div className="revealer" />
+      <div className="relative min-h-screen overflow-hidden">
+        <FloatingBalls count={15} />
 
-      <section className="max-w-7xl mx-auto px-4 py-10 space-y-16">
-        {projects.map((p, idx) => (
-          <Card key={p.name} p={p} index={idx} />
-        ))}
-      </section>
-    </div>
+        <section className="max-w-7xl mx-auto px-4 py-10 space-y-16">
+          {projects.map((p, idx) => (
+            <Card key={p.name} p={p} index={idx} />
+          ))}
+        </section>
+      </div>
+    </>
   );
 }
 

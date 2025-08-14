@@ -9,11 +9,26 @@ body {
   font-family: var(--font-montserrat);
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-montserrat);
   font-weight: 700;
 }
 
-
-
 @import "tailwindcss";
+
+.revealer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100svh;
+  transform-origin: center top;
+  background-color: #000;
+  pointer-events: none;
+  z-index: 2000;
+}
