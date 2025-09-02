@@ -32,3 +32,88 @@ h6 {
   pointer-events: none;
   z-index: 2000;
 }
+
+
+/* ------------- globals.css ------------- */
+
+/* ~~ HOVER-TIP COMPONENT STYLES ~~ */
+.hover-tip {
+  position: relative;
+  color: var(--font-color, #0073e6);
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.hover-tip:hover {
+  color: var(--font-color-hover, #ff00cc);
+}
+
+.hover-tip .hover-tip-img {
+  display: none;
+  position: absolute;
+  bottom: 2.2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: auto;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.hover-tip:hover .hover-tip-img {
+  display: block;
+}
+
+/* ~~ BUTTON GRADIENT / GLOW STYLES ~~ */
+.gradient-btn {
+  font-size: 1.4em;
+  padding: 0.6em 0.8em;
+  border-radius: 0.5em;
+  border: none;
+  background-color: #000;
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 2px 2px 3px #000000b4;
+  position: relative;
+  z-index: 2;
+}
+
+.gradient-wrapper {
+  position: relative;
+  display: inline-block;
+  padding: 3px;
+  border-radius: 0.9em;
+  transition: all 0.4s ease;
+}
+
+/* purple-fire wrapper */
+.gradient-wrapper.fire {
+  background: linear-gradient(90deg, #900c3f, #c70039, #f94c10, #799eff);
+}
+
+/* blue-sky wrapper */
+.gradient-wrapper.sky {
+  background: linear-gradient(90deg, #aed2ff, #344cb7, #577bc1, #ffeb00);
+}
+
+.gradient-wrapper::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: inherit;
+  z-index: -1;
+  filter: blur(0);
+  transition: filter 0.4s ease, opacity 0.4s ease;
+  opacity: 0;
+}
+
+.gradient-wrapper:hover::before {
+  filter: blur(1.2em);
+  opacity: 0.8;
+}
+
+.gradient-wrapper:active::before {
+  filter: blur(0.2em);
+  opacity: 1;
+}
