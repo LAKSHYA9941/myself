@@ -92,7 +92,7 @@ export default function LandingSection() {
         {/* right */}
         <div ref={imgRef} className="flex-shrink-0 w-full md:w-auto flex justify-center">
           <Image
-            src="/mine.jpeg"
+            src="/mine2.jpeg"
             width={400}
             height={400}
             alt="Lakshya"
