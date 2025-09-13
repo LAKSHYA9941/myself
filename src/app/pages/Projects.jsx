@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { FiGithub, FiExternalLink } from 'react-icons/fi';
 import { SiMongodb, SiExpress, SiReact, SiTailwindcss, SiFirebase, SiTypescript } from 'react-icons/si';
 import Image from 'next/image';
+import { TracingBeam } from '../ui/tracing-beam';
 
 const projects = [
   {
@@ -241,15 +242,22 @@ const Card = ({ p, index }) => (
 /* ---------- main page ---------- */
 const Projects = () => {
   return (
-    <>
+    <TracingBeam className="px-4">
       <div className="relative min-h-screen overflow-hidden">
-        <section className="max-w-7xl mx-auto px-4 py-10 space-y-16">
+        <section className="max-w-7xl mx-auto px-4 py-10 space-y-16 pl-6 md:pl-10">
+          <div className="text-center mb-12">
+            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">My Projects</h1>
+            <p className="text-slate-300 max-w-2xl mx-auto">
+              Here are some projects I've built, from full-stack web apps to AI-powered tools. 
+              Each one taught me something new about shipping quality software.
+            </p>
+          </div>
           {projects.map((p, idx) => (
             <Card key={p.name} p={p} index={idx} />
           ))}
         </section>
       </div>
-    </>
+    </TracingBeam>
   );
 }
 

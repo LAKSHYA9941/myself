@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import emailjs from 'emailjs-com';
 import Button from '../components/Socials';
+import { TracingBeam } from '../ui/tracing-beam';
 
 const Contacts = () => {
   const [form, setForm] = useState({ name: '', email: '', message: '' });
@@ -23,8 +24,9 @@ const Contacts = () => {
       .catch(() => setStatus('Could not send. Try again?'));
   };
   return (
-    <>
+    <TracingBeam className="px-4">
       <section className="min-h-screen flex items-center justify-center px-4 py-10">
+        <div className="pl-6 md:pl-10">
         <form
           onSubmit={handleSubmit}
           className="w-full max-w-md space-y-6 bg-[#0d1117]/60 backdrop-blur-lg border border-[#27374D]/40 rounded-2xl p-8 shadow-[0_0_25px_-5px_#B13BFF40]"
@@ -74,8 +76,9 @@ const Contacts = () => {
           {status && <p className="text-center text-sm text-gray-300 pt-2">{status}</p>}
           <Button />
         </form>
+        </div>
       </section>
-    </>
+    </TracingBeam>
   );
 };
 

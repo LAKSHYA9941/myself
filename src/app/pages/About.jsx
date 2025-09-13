@@ -4,6 +4,7 @@ import React from 'react';
 import Certis from '../components/Certis';
 import Education from '../components/Education';
 import Image from 'next/image';
+import { TracingBeam } from '../ui/tracing-beam';
 
 export default function About() {
 
@@ -17,8 +18,9 @@ export default function About() {
     ];
 
     return (
-        <div className="relative min-h-screen overflow-hidden text-white">
-            <div className="flex flex-col items-center gap-10 max-w-4xl mx-auto px-6 py-12 text-center">
+        <TracingBeam className="px-4">
+            <div className="relative min-h-screen overflow-hidden text-white">
+                <div className="flex flex-col items-center gap-10 max-w-4xl mx-auto px-6 py-12 text-center pl-6 md:pl-10">
                 {/* text */}
                 <div className="space-y-6 leading-relaxed">
                     <h1 className="text-3xl font-bold border-b border-white/20 pb-2">About Me</h1>
@@ -31,11 +33,12 @@ export default function About() {
                 <div className="w-full max-w-md">
                     <Image src="/about.svg" alt="about" width={400} height={400} className="w-full h-auto drop-shadow-xl mx-auto" />
                 </div>
-            </div>
 
-            {/* children */}
-            <section><Certis /></section>
-            <section><Education /></section>
-        </div>
+                {/* children */}
+                <section><Certis /></section>
+                <section><Education /></section>
+                </div>
+            </div>
+        </TracingBeam>
     );
 }

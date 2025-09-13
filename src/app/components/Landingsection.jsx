@@ -4,10 +4,11 @@ import Image from "next/image";
 import Link from "next/link";
 import HoverEffect from "./Hoverit";   // your earlier component
 import ResumeDownloadButton from "./ResumeDownloadButton";
+import { TracingBeam } from "../ui/tracing-beam";
 
 export default function LandingSection() {
   const lines = [
-    "I'm a full-stack developer",
+    "I'm a full-stack AI developer",
     "Still thinking what to add in my skill arsenal",
     "Writing code that’s 90% elegance, 10% duct tape, and 100% ‘don’t touch that part'"
   ];
@@ -27,8 +28,9 @@ export default function LandingSection() {
   }
 
   return (
-    <section className="min-h-screen flex items-center justify-center px-6 py-6">
-      <div className="max-w-7xl w-full flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12">
+    <TracingBeam className="px-4">
+      <section className="min-h-screen flex items-center justify-center px-6 py-6">
+        <div className="max-w-7xl w-full flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12 pl-6 md:pl-10">
         {/* left */}
         <div className="flex-1 md:ml-8 space-y-6 text-center md:text-left z-10">
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white">
@@ -67,10 +69,32 @@ export default function LandingSection() {
             width={400}
             height={400}
             alt="Lakshya"
-            className="h-[50vh] md:h-[75vh] w-auto object-contain rounded-3xl drop-shadow-[0_0_8px_#fff]"
+            className="h-[50vh] md:h-[75vh] w-auto object-contain rounded-3xl drop-shadow-[0_0_8px_#fff] animate-bounce-slow"
           />
         </div>
-      </div>
-    </section>
+        </div>
+      </section>
+      
+      {/* Custom slow bounce animation */}
+      <style jsx global>{`
+        @keyframes bounce-slow {
+          0%, 20%, 53%, 80%, 100% {
+            transform: translate3d(0, 0, 0);
+          }
+          40%, 43% {
+            transform: translate3d(0, -15px, 0);
+          }
+          70% {
+            transform: translate3d(0, -8px, 0);
+          }
+          90% {
+            transform: translate3d(0, -3px, 0);
+          }
+        }
+        .animate-bounce-slow {
+          animation: bounce-slow 3s ease-in-out infinite;
+        }
+      `}</style>
+    </TracingBeam>
   );
 }
