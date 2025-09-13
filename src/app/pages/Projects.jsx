@@ -175,9 +175,7 @@ const projects = [
       'Admin panel for dataset management',
       'Dashboard for tracking metrics',
       'Sleek frontend with dark colors',
-      'Qdrant DB for vector storage',
-      'Zustand state management',
-    ],
+      'Qdrant DB for vector storage',    ],
     image: 'https://res.cloudinary.com/cloud4lakshya/image/upload/v1757795610/Screenshot_98_bfaeaw.png',
   },
 ];
