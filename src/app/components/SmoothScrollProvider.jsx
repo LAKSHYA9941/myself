@@ -54,6 +54,9 @@ export default function SmoothScrollProvider({ children }) {
           isRunning = false;
         };
 
+        // Start RAF immediately to ensure smooth scrolling works on page load
+        startRaf();
+        
         // Detect scroll activity to start/stop raf
         lenis.on("scroll", () => startRaf());
 
@@ -70,6 +73,7 @@ export default function SmoothScrollProvider({ children }) {
         // Clean up visibility listener on unmount
         return () => {
           document.removeEventListener("visibilitychange", onVis);
+          stopRaf();
         };
       } catch (e) {
         // Lenis not installed yet; fail silently
