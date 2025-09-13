@@ -1,6 +1,7 @@
 "use client";
 // Techstack.jsx
 import React from 'react';
+import Bubbles from '../components/Bubbles';
 
 /* ---------- split lists ---------- */
 const stripTop = [
@@ -67,7 +68,8 @@ const LogoGrid = ({ logos }) => (
 export default function Techstack() {
     return (
         <>
-            <div className=" min-h-full overflow-hidden">
+            <div className="relative min-h-full overflow-hidden">
+                <Bubbles count={14} maxSize={96} minSize={28} opacity={0.18} />
                 {/* existing content */}
                 <div className="relative z-10 flex items-center justify-center py-10">
                     <h1 className='text-4xl font-bold text-center text-slate-100'>Techstack</h1>
