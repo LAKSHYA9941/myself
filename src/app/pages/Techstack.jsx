@@ -87,7 +87,7 @@ const LogoGrid = ({ logos }) => (
 export default function Techstack() {
   return (
     <>
-      <div className="relative min-h-full overflow-hidden">
+      <div className="relative min-h-full min-w-full overflow-hidden">
         {/* animated gradient title */}
         <div className="relative z-10 flex items-center justify-center py-10">
           <h1 className="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 animate-pulse">
