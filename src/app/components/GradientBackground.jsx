@@ -2,6 +2,7 @@
 import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { BackgroundGradientAnimation } from "../ui/background-gradient-animation";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -18,23 +19,25 @@ export default function GradientBackground() {
     const el = bgRef.current;
     if (!el) return;
 
-    // default colors
+    // Tuned palettes (4 colors + speed) for Aceternity-like background
     const palettes = {
-      home: ["#22d3ee", "#8b5cf6", "#020617"], // cyan -> violet -> near-black
-      about: ["#60a5fa", "#34d399", "#0b1020"], // blue -> emerald
-      tech: ["#06b6d4", "#f59e0b", "#0b0f1a"], // cyan -> amber
-      projects: ["#a78bfa", "#ec4899", "#0a0a1a"], // violet -> pink
-      contact: ["#f472b6", "#22d3ee", "#0b1020"], // pink -> cyan
-    };
+        home:     { c1: "#090040", c2: "#471396", c3: "#B13BFF", c4: "#111827", speed: 1.0 },
+        about:    { c1: "#0D0A1A", c2: "#2C1B69", c3: "#5E2BFF", c4: "#0F0F23", speed: 0.9 },
+        tech:     { c1: "#0A0A0A", c2: "#2D0A69", c3: "#7C3AED", c4: "#1E1B4B", speed: 1.15 },
+        projects: { c1: "#0F0F23", c2: "#3B0764", c3: "#8B5CF6", c4: "#0A0A0A", speed: 1.25 },
+        contact:  { c1: "#0D0A1A", c2: "#471396", c3: "#B13BFF", c4: "#111827", speed: 1.0 },
+      };
 
-    // Helper to tween CSS variables for gradient stops
+    // Helper to tween CSS variables for gradient stops and speed
     const setPalette = (key) => {
-      const [c1, c2, c3] = palettes[key] || palettes.home;
+      const { c1, c2, c3, c4, speed } = palettes[key] || palettes.home;
       gsap.to(el, {
         duration: 1.2,
         "--c1": c1,
         "--c2": c2,
         "--c3": c3,
+        "--c4": c4,
+        "--bg-speed": speed,
         ease: "power2.out",
       });
     };
@@ -70,20 +73,8 @@ export default function GradientBackground() {
   }, []);
 
   return (
-    <div
-      ref={bgRef}
-      className="fixed inset-0 -z-50 pointer-events-none"
-      style={{
-        /* Animated via CSS variables set by GSAP */
-        /* --mx/--my control focal point, --c1/--c2/--c3 control colors */
-        // @ts-ignore - CSS variables
-        background:
-          "radial-gradient(80vw 80vh at var(--mx, 50%) var(--my, 50%), var(--c1, #22d3ee) 0%, var(--c2, #8b5cf6) 55%, var(--c3, #020617) 100%)",
-        filter: "saturate(110%) blur(0px)",
-      }}
-    >
-      {/* Optional subtle overlay to enrich the colors */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(255,255,255,0.06),transparent_25%),radial-gradient(circle_at_80%_30%,rgba(255,255,255,0.04),transparent_30%),radial-gradient(circle_at_50%_80%,rgba(255,255,255,0.03),transparent_35%)]" />
+    <div className="fixed inset-0 -z-50 pointer-events-none">
+      <BackgroundGradientAnimation ref={bgRef} />
     </div>
   );
 }

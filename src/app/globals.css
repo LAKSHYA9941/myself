@@ -6,7 +6,8 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  /* Lenis provides smooth scrolling; keep native behavior auto to avoid double-easing */
+  scroll-behavior: auto;
   /* accommodates sticky navbar so anchor jumps don't hide headers */
   scroll-padding-top: 88px;
 }

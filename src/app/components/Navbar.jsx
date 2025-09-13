@@ -83,6 +83,27 @@ function Navbar() {
     return () => observer.disconnect();
   }, []);
 
+  const handleAnchorClick = (e, href, closeAfter = false) => {
+    // Use Lenis smooth scroll if available; else allow default behavior
+    try {
+      const hash = typeof href === 'string' && href.includes('#') ? href.split('#')[1] : '';
+      if (!hash) return;
+      const target = document.getElementById(hash);
+      if (!target) return;
+      e.preventDefault();
+      if (window.lenis?.scrollTo) {
+        window.lenis.scrollTo(target, { offset: -88 });
+        // update URL hash without jumping
+        history.replaceState(null, '', `/#${hash}`);
+      } else {
+        const y = target.getBoundingClientRect().top + window.scrollY - 88;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+        history.replaceState(null, '', `/#${hash}`);
+      }
+      if (closeAfter && open) toggleMenu();
+    } catch {}
+  };
+
   return (
     <header className="sticky top-0 z-50 backdrop-blur-md">
       <nav ref={menuRef} className="px-4 lg:px-6 py-3">
@@ -115,7 +136,7 @@ function Navbar() {
               ].join(' ');
               return (
                 <li key={path}>
-                  <Link id="desktopNav" href={href} className={linkClass} prefetch>
+                  <Link id="desktopNav" href={href} className={linkClass} prefetch onClick={(e) => handleAnchorClick(e, href)}>
                     {label}
                   </Link>
                 </li>
@@ -149,7 +170,7 @@ function Navbar() {
                   <Link
                     id="mobileLink"
                     href={href}
-                    onClick={toggleMenu}
+                    onClick={(e) => handleAnchorClick(e, href, true)}
                     className="text-lg uppercase text-slate-300 hover:text-white"
                     prefetch
                   >
