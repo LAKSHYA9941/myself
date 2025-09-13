@@ -1,6 +1,5 @@
-import MouseGradientBG from "../components/Mousebggradient";
-import Contacts from "../pages/Contacts";
+import { redirect } from "next/navigation";
 
 export default function ContactsPage() {
-  return <MouseGradientBG> <Contacts /> </MouseGradientBG>;
+  redirect("/#contact");
 }

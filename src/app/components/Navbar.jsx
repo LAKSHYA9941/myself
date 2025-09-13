@@ -1,12 +1,11 @@
 "use client";
 // Navbar.jsx
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useGSAP } from '@gsap/react';
 import { useClickAway } from 'react-use';
 import gsap from 'gsap';
 import Image from 'next/image';
-import { usePathname } from 'next/navigation';
 
 function Navbar() {
   const [open, setOpen] = useState(false);
@@ -15,13 +14,13 @@ function Navbar() {
   const bar2 = useRef(null);
   const bar3 = useRef(null);
   const drawer = useRef(null);
-  const pathname = usePathname();
+  const [active, setActive] = useState('home');
 
   const links = [
     { path: 'about',     label: 'About' },
     { path: 'techstack', label: 'Tech Stack' },
     { path: 'projects',  label: 'Projects' },
-    { path: 'contacts',   label: 'Contact' },
+    { path: 'contact',   label: 'Contact' },
   ];
 
   /* ---------- desktop stagger ---------- */
@@ -64,10 +63,31 @@ function Navbar() {
 
   useClickAway(menuRef, () => open && toggleMenu());
 
+  // Observe sections to highlight active link
+  useEffect(() => {
+    const sections = links.map(l => document.getElementById(l.path)).filter(Boolean);
+    const home = document.getElementById('home');
+    const all = home ? [home, ...sections] : sections;
+    if (!all.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter(e => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible?.target?.id) setActive(visible.target.id);
+      },
+      { root: null, threshold: [0.4, 0.6, 0.8] }
+    );
+    all.forEach(s => observer.observe(s));
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <header className="sticky top-0 z-50 backdrop-blur-md">
       <nav ref={menuRef} className="px-4 lg:px-6 py-3">
         <div className="flex justify-between items-center mx-auto max-w-screen-xl">
+
           {/* Logo */}
           <Link href="/"  className="flex items-center" prefetch>
             <Image
@@ -83,8 +103,8 @@ function Navbar() {
           {/* Desktop links (≥ 700 px) */}
           <ul className="hidden md:flex flex-row space-x-2 md:space-x-4">
             {links.map(({ path, label }) => {
-              const href = path === 'projects' ? '/projects' : `/${path}`;
-              const isActive = pathname === href;
+              const href = `/#${path}`;
+              const isActive = active === path;
               const linkClass = [
                 'relative px-3 py-2 text-xs sm:text-sm font-medium tracking-wide uppercase rounded-2xl outline-none transition-all duration-300 ease-out',
                 'before:absolute before:inset-0 before:rounded-2xl before:-z-10 before:bg-cyan-400/0 before:blur-sm before:transition-all before:duration-300',
@@ -123,7 +143,7 @@ function Navbar() {
         >
           <ul className="flex flex-col items-center justify-center h-full space-y-8">
             {links.map(({ path, label }) => {
-              const href = path === 'projects' ? '/projects' : `/${path}`;
+              const href = `/#${path}`;
               return (
                 <li key={path}>
                   <Link

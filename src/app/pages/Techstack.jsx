@@ -5,8 +5,7 @@ import { motion } from 'framer-motion';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
-import SubtleGrid from '../components/Subtlegrid';
-import { useRevealer } from '../Hooks/useRevealer';
+
 gsap.registerPlugin(ScrollTrigger);
 
 /* ---------- split lists ---------- */
@@ -43,8 +42,6 @@ const stripBottom = [
     { name: 'Postman', file: 'postman.svg', color: '#ff6c37', src: "https://res.cloudinary.com/cloud4lakshya/image/upload/v1754839917/postman_t2zc8t.svg" },
 ];
 
-
-
 const Logo = ({ src, color, name }) => (
     <motion.div
         className="
@@ -54,15 +51,20 @@ const Logo = ({ src, color, name }) => (
         whileHover={{ scale: 1, rotate: 5, y: -6, filter: `drop-shadow(0 0 8px ${color})` }}
         transition={{ type: 'spring', stiffness: 300, damping: 10 }}
     >
-        <img
-            src={`/${src}`}
-            alt={name}
-            className="w-full h-full object-contain"
-            onError={(e) => (e.target.style.display = 'none')}
-        />
+        {(() => {
+            const finalSrc = src?.startsWith('http') ? src : `/${src}`;
+            return (
+                <img
+                    src={finalSrc}
+                    alt={name}
+                    className="w-full h-full object-contain"
+                    loading="lazy"
+                    onError={(e) => (e.currentTarget.style.display = 'none')}
+                />
+            );
+        })()}
     </motion.div>
 );
-
 
 /* ---------- Pre-filled Strip (no blank space) ---------- */
 const Strip = ({ direction, logos }) => {
@@ -105,20 +107,39 @@ const Strip = ({ direction, logos }) => {
         </div>
     );
 };
+
 /* ---------- Main ---------- */
 export default function Techstack() {
-    useRevealer();
     return (
         <>
-            <div className="revealer" />
             <div className=" min-h-full overflow-hidden">
-                <SubtleGrid cellSize={40} />
                 <Strip direction="ltr" logos={stripTop} />
                 {/* existing content */}
-                <div className="relative z-10 flex items-center justify-center py-20">
+                <div className="relative z-10 flex items-center justify-center py-10">
                     <h1 className='text-4xl font-bold text-center text-slate-100'>Techstack</h1>
                 </div>
                 <Strip direction="rtl" logos={stripBottom} />
+
+                {/* AI-related skills */}
+                <div className="relative z-10 flex items-center justify-center py-8">
+                    <h2 className='text-2xl font-semibold text-center text-slate-200'>AI · Agents · RAG</h2>
+                </div>
+                <Strip
+                  direction="ltr"
+                  logos={[
+                    { name: 'RAG', file: 'https://api.iconify.design/material-symbols/generating-tokens.svg?color=%23f59e0b', color: '#f59e0b' },
+                    { name: 'Generative AI', file: 'https://api.iconify.design/mdi/creation.svg?color=%23e879f9', color: '#e879f9' },
+                    { name: 'AI Agents', file: 'https://api.iconify.design/mdi/robot-outline.svg?color=%23a3e635', color: '#a3e635' },
+                    { name: 'Agentic Workflows', file: 'https://api.iconify.design/mdi/graph-outline.svg?color=%238b5cf6', color: '#8b5cf6' },
+                    { name: 'MCP', file: 'https://api.iconify.design/mdi/api.svg?color=%236ee7b7', color: '#6ee7b7' },
+                    { name: 'LangChain', file: 'https://api.iconify.design/simple-icons/langchain.svg?color=%2300bf8f', color: '#00bf8f' },
+                    { name: 'LangGraph', file: 'https://api.iconify.design/mdi/chart-graph.svg?color=%23f43f5e', color: '#f43f5e' },
+                    { name: 'Model Finetuning', file: 'https://api.iconify.design/mdi/tune-variant.svg?color=%23f97316', color: '#f97316' },
+                    { name: 'Qdrant', file: 'https://api.iconify.design/simple-icons/qdrant.svg?color=%238256d1', color: '#8256d1' },
+                    { name: 'Mem0', file: 'https://api.iconify.design/mdi/memory.svg?color=%23fde047', color: '#fde047' },
+                    { name: 'Neo4j', file: 'https://api.iconify.design/simple-icons/neo4j.svg?color=%2300A3E0', color: '#00A3E0' },
+                  ]}
+                />
             </div>
         </>
     );

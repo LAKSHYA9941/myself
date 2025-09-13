@@ -5,6 +5,7 @@ import TextPlugin from "gsap/TextPlugin";
 import Image from "next/image";
 import Link from "next/link";
 import HoverEffect from "./Hoverit";   // your earlier component
+import ResumeDownloadButton from "./ResumeDownloadButton";
 
 gsap.registerPlugin(TextPlugin);
 
@@ -76,16 +77,19 @@ export default function LandingSection() {
           </p>
 
           <div className="flex flex-col sm:flex-row justify-center md:justify-start gap-4 pt-4">
-            <Link href="/contacts">
+            <Link href="/#contact">
               <span className="gradient-wrapper fire">
                 <button className="gradient-btn">Contact Me</button>
               </span>
             </Link>
-            <Link href="/projects">
+            <Link href="/#projects">
               <span className="gradient-wrapper sky">
                 <button className="gradient-btn">Explore Projects</button>
               </span>
             </Link>
+            <span className="gradient-wrapper">
+              <ResumeDownloadButton />
+            </span>
           </div>
         </div>
 

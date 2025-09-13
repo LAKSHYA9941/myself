@@ -7,8 +7,6 @@ import ScrollTrigger from 'gsap/ScrollTrigger';
 import { FiGithub, FiExternalLink } from 'react-icons/fi';
 import { SiMongodb, SiExpress, SiReact, SiTailwindcss, SiFirebase, SiTypescript } from 'react-icons/si';
 import Image from 'next/image';
-import FloatingBalls from '../components/Floatingballs';
-import { useRevealer } from '../Hooks/useRevealer';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -67,6 +65,118 @@ const projects = [
       'Mobile-first responsive design',
     ],
     image: 'https://res.cloudinary.com/cloud4lakshya/image/upload/v1754839922/currency_converter_mns6dg.png',
+  },
+  {
+    name: 'Tokenizer',
+    tagline: 'Fast subword tokenizer with custom vocabulary and visualization.',
+    live: undefined,
+    repo: undefined,
+    stack: [
+      { icon: <SiTypescript className="text-[#3178C6]" />, name: 'TypeScript' },
+      { icon: <SiReact className="text-[#61DAFB]" />, name: 'React' },
+    ],
+    bullets: [
+      'BPE/WordPiece style training and export',
+      'Web UI to compare tokenization strategies',
+      'Benchmarking mode with sample corpora',
+    ],
+    image: 'https://res.cloudinary.com/cloud4lakshya/image/upload/v1754839922/currency_converter_mns6dg.png',
+  },
+  {
+    name: 'Persona AI',
+    tagline: 'Multi-persona conversational assistant with memory and tools.',
+    live: undefined,
+    repo: undefined,
+    stack: [
+      { icon: <SiReact className="text-[#61DAFB]" />, name: 'React' },
+      { icon: <SiTailwindcss className="text-[#06B6D4]" />, name: 'Tailwind CSS' },
+    ],
+    bullets: [
+      'Programmable personas and guardrails',
+      'Context memory and prompt templates',
+      'Tool usage and persona switching',
+    ],
+    image: 'https://res.cloudinary.com/cloud4lakshya/image/upload/v1754839921/chaiproject_bnylai.png',
+  },
+  {
+    name: 'Thumbnail AI',
+    tagline: 'AI-powered YouTube thumbnail ideation and generation pipeline.',
+    live: undefined,
+    repo: undefined,
+    stack: [
+      { icon: <SiReact className="text-[#61DAFB]" />, name: 'React' },
+      { icon: <SiTailwindcss className="text-[#06B6D4]" />, name: 'Tailwind CSS' },
+    ],
+    bullets: [
+      'Prompted design variants with ranking',
+      'Guided composition overlays',
+      'Export and SVG-to-PNG rasterization',
+    ],
+    image: '/chaiproject.png',
+  },
+  {
+    name: 'Site Cloner Tool',
+    tagline: 'Browser-based site snapshotter and component extractor.',
+    live: undefined,
+    repo: undefined,
+    stack: [
+      { icon: <SiTypescript className="text-[#3178C6]" />, name: 'TypeScript' },
+      { icon: <SiReact className="text-[#61DAFB]" />, name: 'React' },
+    ],
+    bullets: [
+      'Parses DOM into reusable component blocks',
+      'Downloads assets and resolves dependencies',
+      'One-click export of component library',
+    ],
+    image: 'https://res.cloudinary.com/cloud4lakshya/image/upload/v1754839921/chaiproject_bnylai.png',
+  },
+  {
+    name: 'Browser Agent',
+    tagline: 'Autonomous browser agent for structured tasks and scraping.',
+    live: undefined,
+    repo: undefined,
+    stack: [
+      { icon: <SiTypescript className="text-[#3178C6]" />, name: 'TypeScript' },
+      { icon: <SiTailwindcss className="text-[#06B6D4]" />, name: 'Tailwind CSS' },
+    ],
+    bullets: [
+      'Action planning and stateful execution',
+      'Navigation, scraping, and form-filling',
+      'Replayable trajectories and logs',
+    ],
+    image: '/techsvg.svg',
+  },
+  {
+    name: 'Simple RAG',
+    tagline: 'Retrieval-Augmented Generation starter with vector store.',
+    live: undefined,
+    repo: undefined,
+    stack: [
+      { icon: <SiTypescript className="text-[#3178C6]" />, name: 'TypeScript' },
+      { icon: <SiTailwindcss className="text-[#06B6D4]" />, name: 'Tailwind CSS' },
+    ],
+    bullets: [
+      'Embeddings, chunking, and retrieval',
+      'Citations with source highlighting',
+      'Dataset upload and indexing UI',
+    ],
+    image: '/currency_converter.png',
+  },
+  {
+    name: "Company RAG FT",
+    tagline: "Fine-tuned RAG over a company's knowledge base.",
+    live: undefined,
+    repo: undefined,
+    stack: [
+      { icon: <SiTypescript className="text-[#3178C6]" />, name: 'TypeScript' },
+      { icon: <SiTailwindcss className="text-[#06B6D4]" />, name: 'Tailwind CSS' },
+    ],
+    bullets: [
+      'Domain-specific reranking and prompt calibration',
+      'Access control and anonymization',
+      'Evaluation dashboard and traces',
+    ],
+    image: '/notemakeimg.jpeg',
   },
 ];
 
@@ -146,13 +256,9 @@ const Card = ({ p, index }) => {
 
 /* ---------- main page ---------- */
 const Projects = () => {
-  useRevealer();
   return (
     <>
-      <div className="revealer" />
       <div className="relative min-h-screen overflow-hidden">
-        <FloatingBalls count={15} />
-
         <section className="max-w-7xl mx-auto px-4 py-10 space-y-16">
           {projects.map((p, idx) => (
             <Card key={p.name} p={p} index={idx} />

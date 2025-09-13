@@ -1,5 +1,5 @@
-import Projects from "../pages/Projects";
+import { redirect } from "next/navigation";
 
 export default function ProjectsPage() {
-  return <Projects />;
+  return redirect("/#projects");
 }

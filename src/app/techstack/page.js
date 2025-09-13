@@ -1,5 +1,5 @@
-import Techstack from "../pages/Techstack";
+import { redirect } from "next/navigation";
 
 export default function TechstackPage() {
-  return  <Techstack /> ;
+  redirect("/#techstack");
 }

@@ -5,11 +5,8 @@ import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import emailjs from 'emailjs-com';
 import Button from '../components/Socials';
-import { useRevealer } from '../Hooks/useRevealer';
 
 const Contacts = () => {
-  useRevealer();
-
   const [form, setForm] = useState({ name: '', email: '', message: '' });
   const [status, setStatus] = useState('');
   const formBox = useRef(null);
@@ -42,8 +39,6 @@ const Contacts = () => {
   };
   return (
     <>
-      <div className="revealer" />
-
       <section className="min-h-full flex items-center  justify-center px-4 py-10 backdrop-blur-lg">
         <form
           ref={formBox}
