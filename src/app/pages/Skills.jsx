@@ -84,7 +84,6 @@ export default function Skills() {
 
   return (
     <section className="w-full relative overflow-hidden">
-      <Bubbles count={12} maxSize={88} minSize={24} opacity={0.16} />
       <div className="relative z-10 max-w-5xl mx-auto px-6 py-16">
         <h2 className="text-4xl font-bold text-center text-white">Skills & Journey</h2>
         <p className="text-center text-slate-300 mt-2">
