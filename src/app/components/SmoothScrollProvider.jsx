@@ -17,11 +17,12 @@ export default function SmoothScrollProvider({ children }) {
         const mod = await import("@studio-freight/lenis");
         const Lenis = mod.default || mod;
         lenis = new Lenis({
-          duration: 0.9,
+          duration: 0.5,
           smoothWheel: true,
           smoothTouch: false,
           gestureOrientation: "vertical",
-          easing: (t) => 1 - Math.pow(1 - t, 1.5),
+          easing: (t) => t, // linear easing = cheaper
+          autoRaf: false, // we’ll run our own RAF loop only when needed
         });
 
         // Expose globally for in-page anchor navigation helpers

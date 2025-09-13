@@ -1,6 +1,7 @@
 "use client";
 
 import React from 'react';
+import { motion } from 'framer-motion';
 import { FiGithub, FiExternalLink } from 'react-icons/fi';
 import { SiMongodb, SiExpress, SiReact, SiTailwindcss, SiFirebase, SiTypescript } from 'react-icons/si';
 import Image from 'next/image';
@@ -175,11 +176,25 @@ const projects = [
   },
 ];
 
-/* ---------- simple static card ---------- */
-const Card = ({ p }) => (
-  <div className="grid md:grid-cols-5 gap-6 items-center rounded-2xl p-3 hover:bg-white/5 transition-colors">
+/* ---------- pop-reveal card ---------- */
+const cardVariants = {
+  hidden: { opacity: 0, y: 40, scale: 0.95 },
+  visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.5, ease: 'easeOut' } },
+};
+
+const Card = ({ p, index }) => (
+  <motion.div
+    variants={cardVariants}
+    initial="hidden"
+    whileInView="visible"
+    viewport={{ once: true, amount: 0.3 }}
+    className="grid md:grid-cols-5 gap-6 items-center rounded-2xl p-3 hover:bg-white/5 transition-colors"
+  >
     {/* IMAGE */}
-    <div className="md:col-span-2 rounded-xl overflow-hidden shadow-xl">
+    <motion.div
+      whileHover={{ scale: 1.02 }}
+      className="md:col-span-2 rounded-xl overflow-hidden shadow-xl"
+    >
       <Image
         src={p.image}
         alt={p.name}
@@ -188,10 +203,13 @@ const Card = ({ p }) => (
         className="w-full h-auto aspect-video"
         loading="lazy"
       />
-    </div>
+    </motion.div>
 
     {/* CONTENT */}
-    <div className="md:col-span-3 space-y-3">
+    <motion.div
+      className="md:col-span-3 space-y-3"
+      transition={{ delay: index * 0.1 }}
+    >
       <h3 className="text-2xl font-semibold text-white">{p.name}</h3>
       <p className="text-slate-300 text-sm">{p.tagline}</p>
       <ul className="text-sm text-slate-400 list-disc list-inside space-y-1">
@@ -216,8 +234,8 @@ const Card = ({ p }) => (
           </a>
         )}
       </div>
-    </div>
-  </div>
+    </motion.div>
+  </motion.div>
 );
 
 /* ---------- main page ---------- */
@@ -226,8 +244,8 @@ const Projects = () => {
     <>
       <div className="relative min-h-screen overflow-hidden">
         <section className="max-w-7xl mx-auto px-4 py-10 space-y-16">
-          {projects.map((p) => (
-            <Card key={p.name} p={p} />
+          {projects.map((p, idx) => (
+            <Card key={p.name} p={p} index={idx} />
           ))}
         </section>
       </div>

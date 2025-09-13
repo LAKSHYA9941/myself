@@ -1,29 +1,9 @@
 "use client";
-import React, { useEffect, useRef } from "react";
-import gsap from "gsap";
+import React from "react";
+import { TracingBeam } from "../ui/tracing-beam";
 
 export default function Skills() {
-  const beamRef = useRef(null);
-
-  useEffect(() => {
-    const prefersReduced = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReduced) return;
-    if (!beamRef.current) return;
-    gsap.fromTo(
-      beamRef.current,
-      { yPercent: -100, opacity: 0 },
-      {
-        yPercent: 100,
-        opacity: 1,
-        duration: 3,
-        repeat: -1,
-        ease: "power1.inOut",
-        yoyo: true,
-      }
-    );
-  }, []);
-
-  const stages = [
+const stages = [
     {
       id: "frontend",
       title: "Frontend Foundations",
@@ -83,54 +63,30 @@ export default function Skills() {
   ];
 
   return (
-    <section className="w-full relative overflow-hidden">
-      <div className="relative z-10 max-w-5xl mx-auto px-6 py-16">
-        <h2 className="text-4xl font-bold text-center text-white">Skills & Journey</h2>
-        <p className="text-center text-slate-300 mt-2">
+    <TracingBeam className="px-6">
+      <div className="max-w-5xl mx-auto antialiased pt-4 relative">
+        <h2 className="text-4xl font-bold text-center text-white mb-2">Skills & Journey</h2>
+        <p className="text-center text-slate-300 mb-10">
           How I grew from frontend → backend → fullstack → fullstack AI developer
         </p>
 
-        {/* Timeline */}
-        <div className="relative mt-12">
-          {/* vertical line with tracing beam */}
-          <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-[#471396] via-[#B13BFF] to-transparent rounded-full opacity-30" />
-          <div
-            ref={beamRef}
-            className="absolute left-1/2 -translate-x-1/2 top-0 w-1 h-6 bg-gradient-to-b from-white via-[#B13BFF] to-white rounded-full shadow-[0_0_12px_#B13BFF,0_0_24px_#B13BFF] z-10"
-          />
-
-          <div className="space-y-10">
-            {stages.map((s, idx) => (
-              <div
-                id={s.id}
-                key={s.id}
-                className={`flex flex-col md:flex-row items-stretch gap-6 ${idx % 2 === 0 ? 'md:flex-row-reverse' : ''}`}
-              >
-                {/* Card */}
-                <div className="md:w-1/2"></div>
-                <div className="md:w-1/2"></div>
-                <div className={`relative md:w-1/2 ${idx % 2 === 0 ? 'md:pr-8' : 'md:pl-8'}`}>
-                  {/* connector dot */}
-                  <div className="hidden md:block absolute top-6 -translate-y-1/2 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-[#B13BFF] shadow-[0_0_15px_#B13BFF]" />
-
-                  <div className="bg-[#0d1117]/60 border border-white/10 rounded-2xl p-6 shadow-[0_0_25px_-5px_#B13BFF40] hover:shadow-[0_0_35px_-5px_#B13BFF66] transition-shadow">
-                    <div className="flex items-center gap-3">
-                      <div className="text-2xl">{s.emoji}</div>
-                      <h3 className="text-xl font-semibold text-white">{s.title}</h3>
-                    </div>
-                    <p className="mt-2 text-slate-300 text-sm">{s.blurb}</p>
-                    <ul className="mt-4 list-disc list-inside text-slate-400 space-y-1 text-sm">
-                      {s.points.map((p) => (
-                        <li key={p}>{p}</li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            ))}
+        {stages.map((s, index) => (
+          <div key={`content-${index}`} className="mb-10">
+            <h2 className="bg-black text-white rounded-full text-sm w-fit px-4 py-1 mb-4">
+              {s.emoji} {s.title}
+            </h2>
+            <p className="text-xl mb-4 font-semibold text-white">{s.title}</p>
+            <div className="text-sm prose prose-sm dark:prose-invert text-slate-300">
+              <p className="mb-2">{s.blurb}</p>
+              <ul className="list-disc list-inside space-y-1">
+                {s.points.map((p) => (
+                  <li key={p}>{p}</li>
+                ))}
+              </ul>
+            </div>
           </div>
-        </div>
+        ))}
       </div>
-    </section>
+    </TracingBeam>
   );
 }

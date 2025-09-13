@@ -85,36 +85,58 @@ const LogoGrid = ({ logos }) => (
 
 /* ---------- Main ---------- */
 export default function Techstack() {
-    return (
-        <>
-            <div className="relative min-h-full overflow-hidden">
-                {/* existing content */}
-                <div className="relative z-10 flex items-center justify-center py-10">
-                    <h1 className='text-4xl font-bold text-center text-slate-100'>Techstack</h1>
-                </div>
-                <LogoGrid logos={stripTop} />
-                <LogoGrid logos={stripBottom} />
+  return (
+    <>
+      <div className="relative min-h-full overflow-hidden">
+        {/* animated gradient title */}
+        <div className="relative z-10 flex items-center justify-center py-10">
+          <h1 className="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 animate-pulse">
+            Techstack
+          </h1>
+        </div>
 
-                {/* AI-related skills */}
-                <div className="relative z-10 flex items-center justify-center py-8">
-                    <h2 className='text-2xl font-semibold text-center text-slate-200'>AI · Agents · RAG</h2>
-                </div>
-                <LogoGrid
-                  logos={[
-                    { name: 'RAG', file: 'https://api.iconify.design/material-symbols/generating-tokens.svg?color=%23f59e0b', color: '#f59e0b' },
-                    { name: 'Generative AI', file: 'https://api.iconify.design/mdi/creation.svg?color=%23e879f9', color: '#e879f9' },
-                    { name: 'AI Agents', file: 'https://api.iconify.design/mdi/robot-outline.svg?color=%23a3e635', color: '#a3e635' },
-                    { name: 'Agentic Workflows', file: 'https://api.iconify.design/mdi/graph-outline.svg?color=%238b5cf6', color: '#8b5cf6' },
-                    { name: 'MCP', file: 'https://api.iconify.design/mdi/api.svg?color=%236ee7b7', color: '#6ee7b7' },
-                    { name: 'LangChain', file: 'https://api.iconify.design/simple-icons/langchain.svg?color=%2300bf8f', color: '#00bf8f' },
-                    { name: 'LangGraph', file: 'https://api.iconify.design/mdi/chart-graph.svg?color=%23f43f5e', color: '#f43f5e' },
-                    { name: 'Model Finetuning', file: 'https://api.iconify.design/mdi/tune-variant.svg?color=%23f97316', color: '#f97316' },
-                    { name: 'Qdrant', file: 'https://api.iconify.design/simple-icons/qdrant.svg?color=%238256d1', color: '#8256d1' },
-                    { name: 'Mem0', file: 'https://api.iconify.design/mdi/memory.svg?color=%23fde047', color: '#fde047' },
-                    { name: 'Neo4j', file: 'https://api.iconify.design/simple-icons/neo4j.svg?color=%2300A3E0', color: '#00A3E0' },
-                  ]}
-                />
-            </div>
-        </>
-    );
+        {/* staggered fade-in grids */}
+        <div className="animate-fadeInUp stagger-100">
+          <LogoGrid logos={stripTop} />
+        </div>
+
+        {/* AI section with glow title */}
+        <div className="relative z-10 flex items-center justify-center py-8">
+          <h2 className="text-2xl md:text-3xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 animate-pulse">
+            AI · Agents · RAG
+          </h2>
+        </div>
+        <div className="animate-fadeInUp stagger-200">
+          <LogoGrid
+            logos={[
+              { name: 'RAG', file: 'https://api.iconify.design/material-symbols/generating-tokens.svg?color=%23f59e0b', color: '#f59e0b' },
+              { name: 'Generative AI', file: 'https://api.iconify.design/mdi/creation.svg?color=%23e879f9', color: '#e879f9' },
+              { name: 'AI Agents', file: 'https://api.iconify.design/mdi/robot-outline.svg?color=%23a3e635', color: '#a3e635' },
+              { name: 'Agentic Workflows', file: 'https://api.iconify.design/mdi/graph-outline.svg?color=%238b5cf6', color: '#8b5cf6' },
+              { name: 'MCP', file: 'https://api.iconify.design/mdi/api.svg?color=%236ee7b7', color: '#6ee7b7' },
+              { name: 'LangChain', file: 'https://api.iconify.design/simple-icons/langchain.svg?color=%2300bf8f', color: '#00bf8f' },
+              { name: 'LangGraph', file: 'https://api.iconify.design/mdi/chart-graph.svg?color=%23f43f5e', color: '#f43f5e' },
+              { name: 'Model Finetuning', file: 'https://api.iconify.design/mdi/tune-variant.svg?color=%23f97316', color: '#f97316' },
+              { name: 'Qdrant', file: 'https://api.iconify.design/simple-icons/qdrant.svg?color=%238256d1', color: '#8256d1' },
+              { name: 'Mem0', file: 'https://api.iconify.design/mdi/memory.svg?color=%23fde047', color: '#fde047' },
+              { name: 'Neo4j', file: 'https://api.iconify.design/simple-icons/neo4j.svg?color=%2300A3E0', color: '#00A3E0' },
+            ]}
+          />
+        </div>
+      </div>
+
+      {/* global fade-in keyframes (inline) */}
+      <style jsx global>{`
+        @keyframes fadeInUp {
+          from { opacity: 0; transform: translateY(20px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fadeInUp {
+          animation: fadeInUp 0.8s ease-out forwards;
+        }
+        .stagger-100 { animation-delay: 0.1s; }
+        .stagger-200 { animation-delay: 0.2s; }
+      `}</style>
+    </>
+  );
 }
