@@ -1,8 +1,28 @@
 "use client";
-import React from "react";
-import Bubbles from "../components/Bubbles";
+import React, { useEffect, useRef } from "react";
+import gsap from "gsap";
 
 export default function Skills() {
+  const beamRef = useRef(null);
+
+  useEffect(() => {
+    const prefersReduced = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) return;
+    if (!beamRef.current) return;
+    gsap.fromTo(
+      beamRef.current,
+      { yPercent: -100, opacity: 0 },
+      {
+        yPercent: 100,
+        opacity: 1,
+        duration: 3,
+        repeat: -1,
+        ease: "power1.inOut",
+        yoyo: true,
+      }
+    );
+  }, []);
+
   const stages = [
     {
       id: "frontend",
@@ -73,8 +93,12 @@ export default function Skills() {
 
         {/* Timeline */}
         <div className="relative mt-12">
-          {/* vertical line */}
-          <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-[#471396] via-[#B13BFF] to-transparent rounded-full opacity-50" />
+          {/* vertical line with tracing beam */}
+          <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-[#471396] via-[#B13BFF] to-transparent rounded-full opacity-30" />
+          <div
+            ref={beamRef}
+            className="absolute left-1/2 -translate-x-1/2 top-0 w-1 h-6 bg-gradient-to-b from-white via-[#B13BFF] to-white rounded-full shadow-[0_0_12px_#B13BFF,0_0_24px_#B13BFF] z-10"
+          />
 
           <div className="space-y-10">
             {stages.map((s, idx) => (

@@ -1,7 +1,7 @@
 "use client";
 // Techstack.jsx
-import React from 'react';
-import Bubbles from '../components/Bubbles';
+import React, { useEffect, useRef } from 'react';
+import gsap from 'gsap';
 
 /* ---------- split lists ---------- */
 const stripTop = [
@@ -39,9 +39,28 @@ const stripBottom = [
 
 const TechLogo = ({ file, color, name }) => {
   const finalSrc = file?.startsWith('http') ? file : `/${file}`;
+  const elRef = useRef(null);
+
+  useEffect(() => {
+    const prefersReduced = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced || !elRef.current) return;
+
+    gsap.set(elRef.current, { scale: 1, rotate: 0 });
+    const onEnter = () => gsap.to(elRef.current, { scale: 1.08, rotate: 2, duration: 0.25, ease: "power2.out" });
+    const onLeave = () => gsap.to(elRef.current, { scale: 1, rotate: 0, duration: 0.25, ease: "power2.out" });
+    const node = elRef.current;
+    node.addEventListener('mouseenter', onEnter);
+    node.addEventListener('mouseleave', onLeave);
+    return () => {
+      node.removeEventListener('mouseenter', onEnter);
+      node.removeEventListener('mouseleave', onLeave);
+    };
+  }, []);
+
   return (
     <div
-      className="w-16 h-16 md:w-24 md:h-24 mx-2 md:mx-3 flex items-center justify-center rounded-xl transition-transform duration-200 ease-out hover:scale-105 hover:-rotate-1"
+      ref={elRef}
+      className="w-16 h-16 md:w-24 md:h-24 mx-2 md:mx-3 flex items-center justify-center rounded-xl cursor-pointer"
       style={{ filter: `drop-shadow(0 0 6px ${color}50)` }}
       title={name}
     >
