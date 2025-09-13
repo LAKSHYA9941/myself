@@ -1,14 +1,9 @@
 "use client";
 
-import React, { useRef } from 'react';
-import { useGSAP } from '@gsap/react';
-import gsap from 'gsap';
-import ScrollTrigger from 'gsap/ScrollTrigger';
+import React from 'react';
 import { FiGithub, FiExternalLink } from 'react-icons/fi';
 import { SiMongodb, SiExpress, SiReact, SiTailwindcss, SiFirebase, SiTypescript } from 'react-icons/si';
 import Image from 'next/image';
-
-gsap.registerPlugin(ScrollTrigger);
 
 const projects = [
   {
@@ -180,79 +175,50 @@ const projects = [
   },
 ];
 
-/* ---------- staggered card reveal ---------- */
-const Card = ({ p, index }) => {
-  const cardRef = useRef(null);
-  const imgRef = useRef(null);
-  const txtRef = useRef(null);
+/* ---------- simple static card ---------- */
+const Card = ({ p }) => (
+  <div className="grid md:grid-cols-5 gap-6 items-center rounded-2xl p-3 hover:bg-white/5 transition-colors">
+    {/* IMAGE */}
+    <div className="md:col-span-2 rounded-xl overflow-hidden shadow-xl">
+      <Image
+        src={p.image}
+        alt={p.name}
+        width={400}
+        height={225}
+        className="w-full h-auto aspect-video"
+        loading="lazy"
+      />
+    </div>
 
-  useGSAP(() => {
-    gsap.timeline({ scrollTrigger: { trigger: cardRef.current, start: 'top 90%' } })
-      .fromTo(
-        cardRef.current,
-        { opacity: 0, y: 80, scale: 0.9 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.8, ease: 'power2.out' }
-      )
-      .fromTo(
-        imgRef.current,
-        { x: -100, opacity: 0 },
-        { x: 0, opacity: 1, duration: 0.6, ease: 'power2.out' },
-        '-=0.4'
-      )
-      .fromTo(
-        txtRef.current.children,
-        { y: 20, opacity: 0 },
-        { y: 0, opacity: 1, stagger: 0.08, duration: 0.4, ease: 'power2.out' },
-        '-=0.3'
-      );
-  });
-
-  return (
-    <>
-      <div ref={cardRef} className="grid md:grid-cols-5 gap-6 items-center">
-        {/* IMAGE */}
-        <div ref={imgRef} className="md:col-span-2 rounded-xl overflow-hidden shadow-xl">
-          <Image
-            src={p.image}
-            alt={p.name}
-            width={400} // Set the width of the image
-            height={225} // Set the height of the image
-            className="w-full h-auto aspect-video"
-            loading="lazy"
-          />
-        </div>
-
-        {/* CONTENT */}
-        <div ref={txtRef} className="md:col-span-3 space-y-3">
-          <h3 className="text-2xl font-semibold text-white">{p.name}</h3>
-          <p className="text-slate-300 text-sm">{p.tagline}</p>
-          <ul className="text-sm text-slate-400 list-disc list-inside space-y-1">
-            {p.bullets.map(b => <li key={b}>{b}</li>)}
-          </ul>
-          <div className="flex items-center gap-x-3 text-xl">
-            {p.stack.map(s => (
-              <span key={s.name} title={s.name} className="inline-block group bg-gradient-to-b from-stone-300/40 to-transparent p-1 rounded-lg shadow-md transition hover:scale-110">
-                {s.icon}
-              </span>
-            ))}
-          </div>
-          <div className="flex gap-x-4">
-            {p.live && (
-              <a href={p.live} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-sm font-medium text-indigo-400 hover:underline">
-                <FiExternalLink /> Live
-              </a>
-            )}
-            {p.repo && (
-              <a href={p.repo} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-sm font-medium text-slate-400 hover:underline">
-                <FiGithub /> Source
-              </a>
-            )}
-          </div>
-        </div>
+    {/* CONTENT */}
+    <div className="md:col-span-3 space-y-3">
+      <h3 className="text-2xl font-semibold text-white">{p.name}</h3>
+      <p className="text-slate-300 text-sm">{p.tagline}</p>
+      <ul className="text-sm text-slate-400 list-disc list-inside space-y-1">
+        {p.bullets.map(b => <li key={b}>{b}</li>)}
+      </ul>
+      <div className="flex items-center gap-x-3 text-xl">
+        {p.stack.map(s => (
+          <span key={s.name} title={s.name} className="inline-block group bg-gradient-to-b from-stone-300/20 to-transparent p-1 rounded-lg shadow-md">
+            {s.icon}
+          </span>
+        ))}
       </div>
-    </>
-  );
-};
+      <div className="flex gap-x-4">
+        {p.live && (
+          <a href={p.live} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-sm font-medium text-indigo-400 hover:underline">
+            <FiExternalLink /> Live
+          </a>
+        )}
+        {p.repo && (
+          <a href={p.repo} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-sm font-medium text-slate-400 hover:underline">
+            <FiGithub /> Source
+          </a>
+        )}
+      </div>
+    </div>
+  </div>
+);
 
 /* ---------- main page ---------- */
 const Projects = () => {
@@ -260,8 +226,8 @@ const Projects = () => {
     <>
       <div className="relative min-h-screen overflow-hidden">
         <section className="max-w-7xl mx-auto px-4 py-10 space-y-16">
-          {projects.map((p, idx) => (
-            <Card key={p.name} p={p} index={idx} />
+          {projects.map((p) => (
+            <Card key={p.name} p={p} />
           ))}
         </section>
       </div>

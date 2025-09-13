@@ -1,90 +1,50 @@
 "use client";
-import React, { useEffect, useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import React, { useEffect, useRef, useState } from "react";
 import { BackgroundGradientAnimation } from "../ui/background-gradient-animation";
-
-gsap.registerPlugin(ScrollTrigger);
 
 /*
   GradientBackground
   - Single, fixed animated gradient background inspired by modern UI kits
-  - Smoothly morphs colors per-section using GSAP ScrollTrigger
-  - Also parallax-reacts to pointer position for subtle depth
+  - Smoothly morphs colors autonomously with random palettes cycling on an interval
 */
 export default function GradientBackground() {
   const bgRef = useRef(null);
+  const [palette, setPalette] = useState({ c1: "#090040", c2: "#471396", c3: "#B13BFF", c4: "#111827", speed: 1.0 });
 
   useEffect(() => {
-    const el = bgRef.current;
-    if (!el) return;
+    const options = [
+      { c1: "#090040", c2: "#471396", c3: "#B13BFF", c4: "#111827", speed: 1.0 },
+      { c1: "#0D0A1A", c2: "#2C1B69", c3: "#5E2BFF", c4: "#0F0F23", speed: 0.9 },
+      { c1: "#0A0A0A", c2: "#2D0A69", c3: "#7C3AED", c4: "#1E1B4B", speed: 1.15 },
+      { c1: "#0F0F23", c2: "#3B0764", c3: "#8B5CF6", c4: "#0A0A0A", speed: 1.25 },
+      { c1: "#0D0A1A", c2: "#471396", c3: "#B13BFF", c4: "#111827", speed: 1.0 },
+      { c1: "#001524", c2: "#15616D", c3: "#FFECD1", c4: "#0B0F1A", speed: 0.95 },
+    ];
 
-    // Tuned palettes (4 colors + speed) for Aceternity-like background
-    const palettes = {
-        home:     { c1: "#090040", c2: "#471396", c3: "#B13BFF", c4: "#111827", speed: 1.0 },
-        about:    { c1: "#0D0A1A", c2: "#2C1B69", c3: "#5E2BFF", c4: "#0F0F23", speed: 0.9 },
-        tech:     { c1: "#0A0A0A", c2: "#2D0A69", c3: "#7C3AED", c4: "#1E1B4B", speed: 1.15 },
-        projects: { c1: "#0F0F23", c2: "#3B0764", c3: "#8B5CF6", c4: "#0A0A0A", speed: 1.25 },
-        contact:  { c1: "#0D0A1A", c2: "#471396", c3: "#B13BFF", c4: "#111827", speed: 1.0 },
-      };
-
-    // Helper to tween CSS variables for gradient stops and speed
-    const setPalette = (key) => {
-      const { c1, c2, c3, c4, speed } = palettes[key] || palettes.home;
-      gsap.to(el, {
-        duration: 1.2,
-        "--c1": c1,
-        "--c2": c2,
-        "--c3": c3,
-        "--c4": c4,
-        "--bg-speed": speed,
-        ease: "power2.out",
-      });
-    };
-
-    // ScrollTriggers for each section with data-theme
-    const sections = Array.from(document.querySelectorAll("section[data-theme]"));
-    const triggers = sections.map((sec) => {
-      const theme = sec.getAttribute("data-theme");
-      return ScrollTrigger.create({
-        trigger: sec,
-        start: "top 60%",
-        end: "bottom 40%",
-        onEnter: () => setPalette(theme),
-        onEnterBack: () => setPalette(theme),
-      });
-    });
-
-    // Pointer parallax for gradient focal point (throttled & disabled on touch/reduced-motion)
-    const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-    const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    let onMove = null;
-    if (!isTouch && !prefersReduced) {
-      const state = { x: 50, y: 50, raf: null };
-      onMove = (e) => {
-        state.x = (e.clientX / window.innerWidth) * 100;
-        state.y = (e.clientY / window.innerHeight) * 100;
-        if (state.raf) return;
-        state.raf = requestAnimationFrame(() => {
-          state.raf = null;
-          gsap.to(el, { "--mx": `${state.x}%`, "--my": `${state.y}%`, duration: 0.25, ease: "power2.out", overwrite: 'auto' });
-        });
-      };
-      window.addEventListener("pointermove", onMove, { passive: true });
-    }
-
-    // Initial palette
-    setPalette("home");
-
+    let mounted = true;
+    const id = setInterval(() => {
+      if (!mounted) return;
+      const next = options[Math.floor(Math.random() * options.length)];
+      setPalette(next);
+    }, 14000); // change every ~14s
     return () => {
-      triggers.forEach((t) => t.kill());
-      if (onMove) window.removeEventListener("pointermove", onMove);
+      mounted = false;
+      clearInterval(id);
     };
   }, []);
 
   return (
     <div className="fixed inset-0 -z-50 pointer-events-none">
-      <BackgroundGradientAnimation ref={bgRef} />
+      <BackgroundGradientAnimation
+        ref={bgRef}
+        style={{
+          ['--c1']: palette.c1,
+          ['--c2']: palette.c2,
+          ['--c3']: palette.c3,
+          ['--c4']: palette.c4,
+          ['--bg-speed']: palette.speed,
+        }}
+      />
     </div>
   );
 }

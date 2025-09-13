@@ -1,12 +1,6 @@
 "use client";
 // Techstack.jsx
-import React, { useMemo, useRef } from 'react';
-import { motion } from 'framer-motion';
-import { useGSAP } from '@gsap/react';
-import gsap from 'gsap';
-import ScrollTrigger from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
+import React from 'react';
 
 /* ---------- split lists ---------- */
 const stripTop = [
@@ -42,94 +36,50 @@ const stripBottom = [
     { name: 'Postman', file: 'postman.svg', color: '#ff6c37', src: "https://res.cloudinary.com/cloud4lakshya/image/upload/v1754839917/postman_t2zc8t.svg" },
 ];
 
-const Logo = ({ src, color, name }) => (
-    <motion.div
-        className="
-      w-16 h-16  
-      md:w-28 md:h-28      
-      mx-2 md:mx-4 flex-shrink-0 cursor-pointer"
-        whileHover={{ scale: 1, rotate: 5, y: -6, filter: `drop-shadow(0 0 8px ${color})` }}
-        transition={{ type: 'spring', stiffness: 300, damping: 10 }}
+const TechLogo = ({ file, color, name }) => {
+  const finalSrc = file?.startsWith('http') ? file : `/${file}`;
+  return (
+    <div
+      className="w-16 h-16 md:w-24 md:h-24 mx-2 md:mx-3 flex items-center justify-center rounded-xl transition-transform duration-200 ease-out hover:scale-105 hover:-rotate-1"
+      style={{ filter: `drop-shadow(0 0 6px ${color}50)` }}
+      title={name}
     >
-        {(() => {
-            const finalSrc = src?.startsWith('http') ? src : `/${src}`;
-            return (
-                <img
-                    src={finalSrc}
-                    alt={name}
-                    className="w-full h-full object-contain"
-                    loading="lazy"
-                    onError={(e) => (e.currentTarget.style.display = 'none')}
-                />
-            );
-        })()}
-    </motion.div>
-);
-
-/* ---------- Pre-filled Strip (no blank space) ---------- */
-const Strip = ({ direction, logos }) => {
-    const stripRef = useRef(null);
-    // mirror the list so the strip is full on first paint (reduced duplicates for performance)
-    const mirrored = useMemo(() => [...logos, ...logos], [logos]);
-
-    const LOGO_W = 88;
-    const GAP = 32;
-    const distance = mirrored.length * (LOGO_W + GAP);
-
-    useGSAP(() => {
-        if (!stripRef.current) return;
-        const tl = gsap.timeline({ repeat: -1 });
-
-        if (direction === 'rtl') {
-            tl.fromTo(stripRef.current, { x: 0 }, { x: -distance, duration: 90, ease: 'none' });
-        } else {
-            tl.fromTo(stripRef.current, { x: -distance }, { x: 0, duration: 90, ease: 'none' });
-        }
-
-        const pause = () => tl.pause();
-        const play = () => tl.play();
-        const el = stripRef.current;
-        el.addEventListener('mouseenter', pause);
-        el.addEventListener('mouseleave', play);
-        return () => {
-            el.removeEventListener('mouseenter', pause);
-            el.removeEventListener('mouseleave', play);
-            tl.kill();
-        };
-    }, [direction, distance]);
-
-    return (
-        <div className="w-full h-40 md:h-48 overflow-hidden py-4 md:py-6">
-            <div
-                ref={stripRef}
-                className="flex whitespace-nowrap will-change-transform"
-            >
-                {mirrored.map((t, i) => (
-                    <Logo key={`${direction}-${t.name}-${i}`} src={t.file} color={t.color} name={t.name} />
-                ))}
-            </div>
-        </div>
-    );
+      <img
+        src={finalSrc}
+        alt={name}
+        className="w-full h-full object-contain"
+        loading="lazy"
+        onError={(e) => (e.currentTarget.style.display = 'none')}
+      />
+    </div>
+  );
 };
+
+const LogoGrid = ({ logos }) => (
+  <div className="w-full py-4 grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-4 place-items-center">
+    {logos.map((t) => (
+      <TechLogo key={t.name} file={t.file} color={t.color} name={t.name} />
+    ))}
+  </div>
+);
 
 /* ---------- Main ---------- */
 export default function Techstack() {
     return (
         <>
             <div className=" min-h-full overflow-hidden">
-                <Strip direction="ltr" logos={stripTop} />
                 {/* existing content */}
                 <div className="relative z-10 flex items-center justify-center py-10">
                     <h1 className='text-4xl font-bold text-center text-slate-100'>Techstack</h1>
                 </div>
-                <Strip direction="rtl" logos={stripBottom} />
+                <LogoGrid logos={stripTop} />
+                <LogoGrid logos={stripBottom} />
 
                 {/* AI-related skills */}
                 <div className="relative z-10 flex items-center justify-center py-8">
                     <h2 className='text-2xl font-semibold text-center text-slate-200'>AI · Agents · RAG</h2>
                 </div>
-                <Strip
-                  direction="ltr"
+                <LogoGrid
                   logos={[
                     { name: 'RAG', file: 'https://api.iconify.design/material-symbols/generating-tokens.svg?color=%23f59e0b', color: '#f59e0b' },
                     { name: 'Generative AI', file: 'https://api.iconify.design/mdi/creation.svg?color=%23e879f9', color: '#e879f9' },

@@ -1,9 +1,5 @@
 "use client";
 import React, { useEffect } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
 
 export default function SmoothScrollProvider({ children }) {
   useEffect(() => {
@@ -30,8 +26,6 @@ export default function SmoothScrollProvider({ children }) {
 
         // Expose globally for in-page anchor navigation helpers
         try { window.lenis = lenis; } catch {}
-
-        lenis.on("scroll", () => ScrollTrigger.update());
 
         const raf = (time) => {
           lenis?.raf(time);

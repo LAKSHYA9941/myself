@@ -8,6 +8,7 @@ import About from "./pages/About";
 import Techstack from "./pages/Techstack";
 import Projects from "./pages/Projects";
 import Contacts from "./pages/Contacts";
+import Skills from "./pages/Skills";
 
 export default function Page() {
   return (
@@ -26,6 +27,10 @@ export default function Page() {
 
         <section id="techstack" data-theme="tech" className="min-h-screen flex items-center">
           <Techstack />
+        </section>
+
+        <section id="skills" className="min-h-screen flex items-center">
+          <Skills />
         </section>
 
         <section id="projects" data-theme="projects" className="min-h-screen">

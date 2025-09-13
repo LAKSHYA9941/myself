@@ -1,15 +1,8 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 
 const Education = () => {
     return (
-        <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: 'easeOut' }}
-
-            className="w-full max-w-2xl mx-auto p-8"
-        >
+        <div className="w-full max-w-2xl mx-auto p-8">
             <section>
                 <h2 className="text-2xl font-bold mb-4 text-center">Education</h2>
                 <div className="space-y-4">
@@ -27,7 +20,7 @@ const Education = () => {
                 <h2 className="text-2xl font-bold mb-4 text-center">Languages Known</h2>
                 <p className="text-center">Hindi, English</p>
             </section>
-        </motion.div>
+        </div>
     );
 }
 

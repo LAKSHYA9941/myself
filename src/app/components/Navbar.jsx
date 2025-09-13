@@ -2,9 +2,6 @@
 // Navbar.jsx
 import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { useGSAP } from '@gsap/react';
-import { useClickAway } from 'react-use';
-import gsap from 'gsap';
 import Image from 'next/image';
 
 function Navbar() {
@@ -19,49 +16,24 @@ function Navbar() {
   const links = [
     { path: 'about',     label: 'About' },
     { path: 'techstack', label: 'Tech Stack' },
+    { path: 'skills',    label: 'Skills' },
     { path: 'projects',  label: 'Projects' },
     { path: 'contact',   label: 'Contact' },
   ];
 
-  /* ---------- desktop stagger ---------- */
-  useGSAP(() => {
-    const items = gsap.utils.toArray('#desktopNav');
-    const mid = Math.floor(items.length / 2);
-    gsap.fromTo(
-      items,
-      { opacity: 0, y: -30 },
-      { opacity: 1, y: 0, duration: 0.6, stagger: { amount: 0.4, from: mid }, ease: 'back.out(1.4)' }
-    );
-  });
-
   /* ---------- burger / drawer ---------- */
-  const toggleMenu = () => {
-    const next = !open;
-    setOpen(next);
-    const tl = gsap.timeline({ defaults: { ease: 'power2.inOut' } });
+  const toggleMenu = () => setOpen(prev => !prev);
 
-    if (next) {
-      tl.to(bar1.current, { y: 6, rotate: 45, duration: 0.3 })
-        .to(bar2.current, { scaleX: 0, duration: 0.2 }, 0)
-        .to(bar3.current, { y: -6, rotate: -45, duration: 0.3 }, 0)
-        .set(drawer.current, { display: 'block' })
-        .fromTo(drawer.current, { x: '100%' }, { x: '0%', duration: 0.4 })
-        .fromTo(
-          '#mobileLink',
-          { opacity: 0, x: 20 },
-          { opacity: 1, x: 0, stagger: 0.06, duration: 0.3 },
-          '-=0.2'
-        );
-    } else {
-      tl.to(bar1.current, { y: 0, rotate: 0, duration: 0.3 })
-        .to(bar2.current, { scaleX: 1, duration: 0.2 }, 0)
-        .to(bar3.current, { y: 0, rotate: 0, duration: 0.3 }, 0)
-        .to(drawer.current, { x: '100%', duration: 0.35 })
-        .set(drawer.current, { display: 'none' });
-    }
-  };
-
-  useClickAway(menuRef, () => open && toggleMenu());
+  // simple click-away
+  useEffect(() => {
+    const onDocClick = (e) => {
+      if (!open) return;
+      const el = menuRef.current;
+      if (el && !el.contains(e.target)) setOpen(false);
+    };
+    document.addEventListener('click', onDocClick);
+    return () => document.removeEventListener('click', onDocClick);
+  }, [open]);
 
   // Observe sections to highlight active link
   useEffect(() => {
@@ -150,17 +122,16 @@ function Navbar() {
             onClick={toggleMenu}
             aria-label="Toggle menu"
           >
-            <span ref={bar1} className="w-6 h-0.5 bg-white rounded" />
-            <span ref={bar2} className="w-6 h-0.5 bg-white rounded" />
-            <span ref={bar3} className="w-6 h-0.5 bg-white rounded" />
+            <span ref={bar1} className={`w-6 h-0.5 bg-white rounded transform transition-transform duration-300 ${open ? 'translate-y-1.5 rotate-45' : ''}`} />
+            <span ref={bar2} className={`w-6 h-0.5 bg-white rounded transform transition-all duration-300 ${open ? 'opacity-0 scale-x-0' : 'opacity-100 scale-x-100'}`} />
+            <span ref={bar3} className={`w-6 h-0.5 bg-white rounded transform transition-transform duration-300 ${open ? '-translate-y-1.5 -rotate-45' : ''}`} />
           </button>
         </div>
 
         {/* Mobile drawer (< 700 px) */}
         <div
           ref={drawer}
-          className="fixed top-0 right-0 h-screen w-64 bg-[#0d1117]/90 backdrop-blur-xl border-l border-[#0d1117]/60 hidden lg:hidden"
-          style={{ display: 'none' }}
+          className={`fixed top-0 right-0 h-screen w-64 bg-[#0d1117]/90 backdrop-blur-xl border-l border-[#0d1117]/60 transform transition-transform duration-300 ${open ? 'translate-x-0' : 'translate-x-full'} lg:hidden`}
         >
           <ul className="flex flex-col items-center justify-center h-full space-y-8">
             {links.map(({ path, label }) => {

@@ -66,9 +66,8 @@
 
 'use client';
 
-import React, { useRef, useEffect } from 'react';
+import React from 'react';
 import Image from 'next/image';
-import gsap from 'gsap';
 
 const certs = [
     { title: 'Crash Course on Python', img: '/pythoncert.png', link: 'https://www.coursera.org/account/accomplishments/verify/DHGSPUGQXRAA' },
@@ -77,45 +76,11 @@ const certs = [
 ];
 
 export default function Certis() {
-    const imgRef = useRef(null);
-    const listRefs = useRef([]);
-    listRefs.current = [];
-
-    const addToRefs = (el) => el && listRefs.current.push(el);
     const [active, setActive] = React.useState(certs[0]);
-
-    /* ---------- GSAP timeline ---------- */
-    const animateTo = (index) => {
-        gsap.timeline()
-            .to(imgRef.current, {
-                scale: 1.05,
-                duration: 0.2,
-                ease: 'power2.out',
-            })
-            .to(imgRef.current, {
-                opacity: 0,
-                duration: 0.3,
-                onComplete: () => setActive(certs[index]),
-            })
-            .to(imgRef.current, {
-                opacity: 1,
-                scale: 1,
-                duration: 0.3,
-                ease: 'power2.out',
-            });
-
-        // highlight list
-        listRefs.current.forEach((li, i) =>
-            gsap.to(li, {
-                backgroundColor: i === index ? '#334155' : '#1e293b',
-                duration: 0.3,
-            })
-        );
-    };
 
     return (
         <div className="flex flex-col md:flex-row gap-8 items-start max-w-5xl mx-auto p-8 h-96">
-            {/* LEFT – animated certificate */}
+            {/* LEFT – certificate */}
             <div className="flex-1 flex justify-center items-center">
                 <a
                     href={active.link}
@@ -124,26 +89,24 @@ export default function Certis() {
                     className="block w-[400px] h-[240px] overflow-hidden rounded-xl shadow-2xl"
                 >
                     <Image
-                        ref={imgRef}
                         src={active.img}
                         alt={active.title}
                         width={400}
                         height={240}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover transition-transform duration-200 hover:scale-[1.01]"
                     />
                     <h3 className="text-xl font-semibold mt-2 text-center">{active.title}</h3>
                 </a>
             </div>
 
-            {/* RIGHT – GSAP-driven list */}
+            {/* RIGHT – list */}
             <ul className="flex-1 space-y-4 overflow-y-auto">
-                {certs.map((c, idx) => (
+                {certs.map((c) => (
                     <li
                         key={c.title}
-                        ref={addToRefs}
-                        onMouseEnter={() => animateTo(idx)}
-                        className="p-4 rounded-lg cursor-pointer"
-                        style={{ backgroundColor: idx === 0 ? '#334155' : '#1e293b' }}
+                        onMouseEnter={() => setActive(c)}
+                        className={`p-4 rounded-lg cursor-pointer transition-colors duration-200 ${active.title === c.title ? 'bg-slate-700/80' : 'bg-slate-800/60 hover:bg-slate-700/70'}`}
+                        onClick={() => setActive(c)}
                     >
                         <span className="font-medium">{c.title}</span>
                     </li>
