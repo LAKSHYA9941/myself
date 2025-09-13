@@ -18,22 +18,22 @@ export default function About() {
 
     return (
         <div className="relative min-h-screen overflow-hidden text-white">
-            <div className="flex flex-col lg:flex-row items-start gap-10 max-w-7xl mx-auto px-6 py-12">
-                {/* animated text */}
-                <div className="flex-1 space-y-6 text-left text-base leading-relaxed">
+            <div className="flex flex-col items-center gap-10 max-w-4xl mx-auto px-6 py-12 text-center">
+                {/* text */}
+                <div className="space-y-6 leading-relaxed">
                     <h1 className="text-3xl font-bold border-b border-white/20 pb-2">About Me</h1>
                     {sentences.map((s, i) => (
                         <p key={i}>{s}</p>
                     ))}
                 </div>
 
-                {/* animated SVG */}
-                <div className="flex-shrink-0 w-full lg:w-1/3">
-                    <Image src="/about.svg" alt="about" width={400} height={400} className="w-full h-auto drop-shadow-xl" />
+                {/* SVG */}
+                <div className="w-full max-w-md">
+                    <Image src="/about.svg" alt="about" width={400} height={400} className="w-full h-auto drop-shadow-xl mx-auto" />
                 </div>
             </div>
 
-            {/* scroll-triggered children */}
+            {/* children */}
             <section><Certis /></section>
             <section><Education /></section>
         </div>

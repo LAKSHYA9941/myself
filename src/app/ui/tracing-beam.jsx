@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform, useSpring, useVelocity } from "framer-motion";
-import { twMerge } from "tailwind-merge";
 
 export const TracingBeam = ({ children, className }) => {
   const ref = useRef(null);
@@ -14,9 +13,12 @@ export const TracingBeam = ({ children, className }) => {
   const [svgHeight, setSvgHeight] = useState(0);
 
   useEffect(() => {
-    if (contentRef.current) {
-      setSvgHeight(contentRef.current.offsetHeight);
-    }
+    const recalc = () => {
+      if (contentRef.current) setSvgHeight(contentRef.current.offsetHeight);
+    };
+    recalc();
+    window.addEventListener('resize', recalc);
+    return () => window.removeEventListener('resize', recalc);
   }, []);
 
   const y1 = useSpring(
@@ -29,23 +31,23 @@ export const TracingBeam = ({ children, className }) => {
   );
 
   return (
-    <motion.div ref={ref} className={twMerge("relative w-full", className)}>
-      <div className="absolute -left-4 md:-left-20 top-3">
+    <motion.div ref={ref} className={["relative w-full", className].filter(Boolean).join(" ") }>
+      <div className="absolute left-2 md:-left-20 top-3 z-10">
         <motion.div
           transition={{ duration: 0.2, delay: 0.5 }}
-          className="ml-1 hidden md:block h-4 w-4 rounded-full border border-neutral-700 bg-neutral-800 shadow-sm"
+          className="ml-1 block h-3 w-3 md:h-4 md:w-4 rounded-full border border-neutral-700 bg-neutral-800 shadow-sm"
         />
         <motion.svg
           aria-hidden="true"
           width="20"
           height="100%"
           viewBox={`0 0 20 ${svgHeight}`}
-          className="ml-4 hidden md:block absolute"
+          className="ml-4 absolute block"
         >
           <motion.path
             d={`M 1 0V ${svgHeight}`}
             fill="none"
-            stroke="#4A4A4A"
+            stroke="#6b6b6b"
             strokeWidth="1"
           />
           <motion.path

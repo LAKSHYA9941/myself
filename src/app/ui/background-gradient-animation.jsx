@@ -47,10 +47,10 @@ export const BackgroundGradientAnimation = React.forwardRef(function BackgroundG
         }
       `}</style>
 
-      {/* Layered animated gradient glows */}
+      {/* Layered animated gradient glows (increased blur & richness) */}
       <div
         aria-hidden
-        className="pointer-events-none absolute -inset-[20%] opacity-45 blur-2xl will-change-transform"
+        className="pointer-events-none absolute -inset-[22%] opacity-60 blur-[80px] will-change-transform"
         style={{
           background:
             "radial-gradient(40vw 40vh at var(--mx) var(--my), var(--c1), transparent 60%), radial-gradient(35vw 35vh at 80% 20%, var(--c2), transparent 70%)",
@@ -61,10 +61,10 @@ export const BackgroundGradientAnimation = React.forwardRef(function BackgroundG
 
       <div
         aria-hidden
-        className="pointer-events-none absolute -inset-[30%] opacity-35 blur-2xl will-change-transform"
+        className="pointer-events-none absolute -inset-[28%] opacity-45 blur-[110px] will-change-transform"
         style={{
           background:
-            "radial-gradient(50vw 50vh at 20% 80%, var(--c3), transparent 65%), radial-gradient(45vw 45vh at 70% 70%, var(--c2), transparent 60%)",
+            "radial-gradient(52vw 52vh at 20% 80%, var(--c3), transparent 65%), radial-gradient(46vw 46vh at 70% 70%, var(--c2), transparent 60%)",
           animation: "floatB calc(48s / var(--bg-speed)) linear infinite",
           mixBlendMode: "screen",
         }}
@@ -72,17 +72,18 @@ export const BackgroundGradientAnimation = React.forwardRef(function BackgroundG
 
       <div
         aria-hidden
-        className="pointer-events-none absolute -inset-[40%] opacity-25 blur-xl will-change-transform"
+        className="pointer-events-none absolute -inset-[36%] opacity-35 blur-[140px] will-change-transform"
         style={{
           background:
-            "radial-gradient(60vw 60vh at 50% 50%, var(--c4), transparent 70%)",
+            "radial-gradient(60vw 60vh at 50% 50%, var(--c4), transparent 72%)",
           animation: "floatA calc(60s / var(--bg-speed)) linear infinite",
           mixBlendMode: "screen",
         }}
       />
 
-      {/* Subtle film overlay to enrich */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(255,255,255,0.03),transparent_25%),radial-gradient(circle_at_80%_30%,rgba(255,255,255,0.02),transparent_30%),radial-gradient(circle_at_50%_80%,rgba(255,255,255,0.015),transparent_35%)]" />
+      {/* Subtle film overlay & vignette to enrich */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(255,255,255,0.035),transparent_25%),radial-gradient(circle_at_80%_30%,rgba(255,255,255,0.025),transparent_30%),radial-gradient(circle_at_50%_80%,rgba(255,255,255,0.02),transparent_35%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_60%,rgba(0,0,0,0.25)_100%)]" />
 
       {children}
     </div>

@@ -60,10 +60,62 @@ const stages = [
         "Evaluation, tracing, prompt hygiene"
       ],
     },
+    {
+      id: "mobile",
+      title: "Mobile & React Native",
+      emoji: "📱",
+      blurb:
+        "Building cross-platform experiences with native-feel UX and performance.",
+      points: [
+        "React Native basics, navigation and theming",
+        "Expo tooling and over-the-air updates",
+        "Platform APIs (camera, storage) and permissions",
+        "Performance profiling and bundle size control",
+      ],
+    },
+    {
+      id: "tooling",
+      title: "Tooling & DevOps",
+      emoji: "🧰",
+      blurb:
+        "Automating builds, quality, and deploys to ship with confidence.",
+      points: [
+        "Git workflows, PR reviews, conventional commits",
+        "Vercel deployments and preview workflows",
+        "ESLint + Prettier + TypeScript hygiene",
+        "Env management, basic monitoring",
+      ],
+    },
+    {
+      id: "systems",
+      title: "Systems & CS",
+      emoji: "🧠",
+      blurb:
+        "Sharpening fundamentals to design resilient, efficient software.",
+      points: [
+        "Data structures & patterns in JS/TS",
+        "HTTP, caching, rate limits",
+        "Auth flows (JWT, sessions) and OWASP basics",
+        "Readable, maintainable code practices",
+      ],
+    },
+    {
+      id: "ai-infra",
+      title: "AI Infrastructure",
+      emoji: "🧪",
+      blurb:
+        "Integrating and evaluating AI safely at scale.",
+      points: [
+        "Dataset curation and evaluation loops",
+        "Tracing and prompt experiments",
+        "Vector DBs (Qdrant), hybrid search",
+        "Guards, fallbacks, and cost controls",
+      ],
+    },
   ];
 
   return (
-    <TracingBeam className="px-6">
+    <TracingBeam className="px-6 md:pl-20">
       <div className="max-w-5xl mx-auto antialiased pt-4 relative">
         <h2 className="text-4xl font-bold text-center text-white mb-2">Skills & Journey</h2>
         <p className="text-center text-slate-300 mb-10">
