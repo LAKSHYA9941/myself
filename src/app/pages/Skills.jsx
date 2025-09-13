@@ -115,11 +115,14 @@ const stages = [
   ];
 
   return (
-    <TracingBeam className="px-6 md:pl-20">
-      <div className="max-w-5xl mx-auto antialiased pt-4 relative">
+    <TracingBeam className="px-4">
+      <div className="max-w-5xl mx-auto antialiased pt-4 relative pl-6 md:pl-10">
         <h2 className="text-4xl font-bold text-center text-white mb-2">Skills & Journey</h2>
-        <p className="text-center text-slate-300 mb-10">
+        <p className="text-center text-slate-300 mb-3">
           How I grew from frontend → backend → fullstack → fullstack AI developer
+        </p>
+        <p className="text-center text-slate-400 mb-10 text-sm">
+          I care about clean UI, honest performance, and shipping things that people actually use. Here’s the path I took and what I’m focusing on next.
         </p>
 
         {stages.map((s, index) => (

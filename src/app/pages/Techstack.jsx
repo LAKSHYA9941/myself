@@ -101,12 +101,16 @@ export default function Techstack() {
     <>
       <div className="relative min-h-screen overflow-hidden">
         <div className="relative z-10 max-w-7xl mx-auto px-6">
-          {/* animated gradient title */}
-          <div className="flex items-center justify-center py-10">
-            <h1 className="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 animate-pulse">
-              Techstack
-            </h1>
-          </div>
+            {/* animated gradient title */}
+            <div className="flex flex-col items-center justify-center py-10 text-center">
+              <h1 className="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 animate-pulse">
+                Techstack
+              </h1>
+              <p className="text-slate-300 max-w-3xl mt-3">
+                I build primarily with JavaScript/TypeScript around React and Next.js, and I love
+                pairing clean UI with strong fundamentals. Below is the toolbox I’m comfortable shipping with.
+              </p>
+            </div>
 
           {/* languages & frontend */}
           <div className="animate-fadeInUp stagger-100">
@@ -142,11 +146,11 @@ export default function Techstack() {
             <h2 className="text-2xl md:text-3xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-orange-500 to-pink-600 animate-pulse">
               More Tools & Infra
             </h2>
+            </div>
+            <div className="animate-fadeInUp stagger-200">
+              <LogoGrid logos={moreTech} />
+            </div>
           </div>
-          <div className="animate-fadeInUp stagger-200">
-            <LogoGrid logos={moreTech} />
-          </div>
-        </div>
       </div>
 
       {/* global fade-in keyframes (inline) */}

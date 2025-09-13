@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-import { motion, useScroll, useTransform, useSpring, useVelocity } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 
 export const TracingBeam = ({ children, className }) => {
   const ref = useRef(null);
@@ -40,21 +40,25 @@ export const TracingBeam = ({ children, className }) => {
         <motion.svg
           aria-hidden="true"
           width="20"
-          height="100%"
           viewBox={`0 0 20 ${svgHeight}`}
           className="ml-4 absolute block"
+          style={{ height: svgHeight ? `${svgHeight}px` : '100%' }}
         >
           <motion.path
             d={`M 1 0V ${svgHeight}`}
             fill="none"
-            stroke="#6b6b6b"
-            strokeWidth="1"
+            stroke="#8b8b8b"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           />
           <motion.path
             d={`M 1 ${y1.get()} L 1 ${y2.get()}`}
             fill="none"
             stroke="url(#gradient)"
-            strokeWidth="1.25"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           />
           <defs>
             <linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
