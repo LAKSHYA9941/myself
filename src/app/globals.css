@@ -28,17 +28,6 @@ h6 {
 
 @import "tailwindcss";
 
-.revealer {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100svh;
-  transform-origin: center top;
-  background-color: #000;
-  pointer-events: none;
-  z-index: 2000;
-}
 
 /* Ensure in-page anchor targets are not obscured by the sticky navbar */
 section[id] {

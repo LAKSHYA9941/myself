@@ -1,46 +1,16 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
-import gsap from "gsap";
-import TextPlugin from "gsap/TextPlugin";
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import HoverEffect from "./Hoverit";   // your earlier component
 import ResumeDownloadButton from "./ResumeDownloadButton";
 
-gsap.registerPlugin(TextPlugin);
-
 export default function LandingSection() {
-  const textRef = useRef(null);
-  const imgRef = useRef(null);
-  const [animatedText, setAnimatedText] = useState("");
-
   const lines = [
     "I'm a full-stack developer",
     "Still thinking what to add in my skill arsenal",
     "Writing code that’s 90% elegance, 10% duct tape, and 100% ‘don’t touch that part'"
   ];
-
-  /* typewriter effect */
-  useEffect(() => {
-    const joined = lines.join("\n");
-    gsap.to({}, {
-      duration: joined.length * 0.05,
-      onUpdate() {
-        const chars = Math.floor(joined.length * this.progress());
-        setAnimatedText(joined.slice(0, chars));
-      }
-    });
-  }, []);
-
-  /* image animation */
-  useEffect(() => {
-    const tl = gsap.timeline({ delay: 0.4 });
-    tl.fromTo(
-      imgRef.current,
-      { opacity: 0, scale: 0.5, rotate: -15, y: 100, filter: "blur(10px)" },
-      { opacity: 1, scale: 1, rotate: 0, y: 0, filter: "blur(0px)", duration: 1.8, ease: "back.out(1.7)" }
-    ).to(imgRef.current, { y: "+=8", repeat: -1, yoyo: true, duration: 3, ease: "sine.inOut" }, ">-0.5");
-  }, []);
 
   /* highlight chosen words with HoverEffect */
   function highlightWords(text) {
@@ -67,14 +37,11 @@ export default function LandingSection() {
             <span className="inline-block animate-wave">👋</span>
           </h1>
 
-          <p className="text-lg sm:text-xl text-zinc-50 min-h-[4rem]" style={{ whiteSpace: "pre-line" }}>
-            {animatedText.split("\n").map((line, i) => (
-              <React.Fragment key={i}>
-                {highlightWords(line)}
-                <br />
-              </React.Fragment>
+          <div className="text-lg sm:text-xl text-zinc-50 space-y-1">
+            {lines.map((line, i) => (
+              <p key={i}>{highlightWords(line)}</p>
             ))}
-          </p>
+          </div>
 
           <div className="flex flex-col sm:flex-row justify-center md:justify-start gap-4 pt-4">
             <Link href="/#contact">
@@ -94,7 +61,7 @@ export default function LandingSection() {
         </div>
 
         {/* right */}
-        <div ref={imgRef} className="flex-shrink-0 w-full md:w-auto flex justify-center">
+        <div className="flex-shrink-0 w-full md:w-auto flex justify-center">
           <Image
             src="/mine2.jpeg"
             width={400}

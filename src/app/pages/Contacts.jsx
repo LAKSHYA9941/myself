@@ -1,27 +1,12 @@
 "use client";
 // Contacts.jsx
-import React, { useRef, useEffect, useState } from 'react';
-import { useGSAP } from '@gsap/react';
-import gsap from 'gsap';
+import React, { useState } from 'react';
 import emailjs from 'emailjs-com';
 import Button from '../components/Socials';
 
 const Contacts = () => {
   const [form, setForm] = useState({ name: '', email: '', message: '' });
   const [status, setStatus] = useState('');
-  const formBox = useRef(null);
-
-  /* ---------- GSAP spin-pop-drop ---------- */
-  useGSAP(() => {
-    gsap
-      .timeline({delay: 0.5})
-      .fromTo(
-        formBox.current,
-        { rotation: -180, scale: 0, y: -200 },
-        { rotation: 0, scale: 1, y: 0, duration: 1, ease: 'back.out(1.7)' },
-      )
-      .to(formBox.current, { scale: 1, y: 0, duration: 0.25, ease: 'power2.out' });
-  });
 
   const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -39,9 +24,8 @@ const Contacts = () => {
   };
   return (
     <>
-      <section className="min-h-full flex items-center  justify-center px-4 py-10 backdrop-blur-lg">
+      <section className="min-h-screen flex items-center justify-center px-4 py-10">
         <form
-          ref={formBox}
           onSubmit={handleSubmit}
           className="w-full max-w-md space-y-6 bg-[#0d1117]/60 backdrop-blur-lg border border-[#27374D]/40 rounded-2xl p-8 shadow-[0_0_25px_-5px_#B13BFF40]"
         >

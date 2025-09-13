@@ -1,7 +1,6 @@
 "use client";
 import './globals.css';
 import GradientBackground from "./components/GradientBackground";
-import { useRevealer } from "./Hooks/useRevealer";
 
 // Sections (existing components composed into one page)
 import LandingPage from "./pages/LandingPage";
@@ -11,11 +10,8 @@ import Projects from "./pages/Projects";
 import Contacts from "./pages/Contacts";
 
 export default function Page() {
-  useRevealer();
   return (
     <>
-      {/* one-time page reveal overlay */}
-      <div className="revealer" />
       {/* global, interactive gradient background */}
       <GradientBackground />
 
