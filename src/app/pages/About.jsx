@@ -4,7 +4,6 @@ import React from 'react';
 import Certis from '../components/Certis';
 import Education from '../components/Education';
 import Image from 'next/image';
-import { TracingBeam } from '../ui/tracing-beam';
 
 export default function About() {
 
@@ -18,27 +17,43 @@ export default function About() {
     ];
 
     return (
-        <TracingBeam className="px-4">
-            <div className="relative min-h-screen overflow-hidden text-white">
-                <div className="flex flex-col items-center gap-10 max-w-4xl mx-auto px-6 py-12 text-center pl-6 md:pl-10">
-                {/* text */}
-                <div className="space-y-6 leading-relaxed">
-                    <h1 className="text-3xl font-bold border-b border-white/20 pb-2">About Me</h1>
+        <div className="min-h-screen text-white flex flex-col justify-center">
+            {/* heading stays centred */}
+            <h1 className="text-3xl font-bold border-b border-white/20 pb-2 text-center">
+                About Me
+            </h1>
+
+            {/* content row: left text | right svg */}
+            <div className="w-full grow grid grid-cols-1 md:grid-cols-2 items-center gap-8 md:gap-16 px-6 py-12">
+                {/* LEFT: text block – hard-left, max-width for readability */}
+                <div className=" text-center max-w-full space-y-6">
                     {sentences.map((s, i) => (
-                        <p key={i}>{s}</p>
+                        <p key={i} className="leading-relaxed">
+                            {s}
+                        </p>
                     ))}
                 </div>
 
-                {/* SVG */}
-                <div className="w-full max-w-md">
-                    <Image src="/about.svg" alt="about" width={400} height={400} className="w-full h-auto drop-shadow-xl mx-auto" />
+                {/* RIGHT: SVG – hard-right, never overflow */}
+                <div className="justify-self-end">
+                    <Image
+                        src="/about.svg"
+                        alt="about"
+                        width={400}
+                        height={400}
+                        className="w-full h-auto max-w-md drop-shadow-xl"
+                    />
                 </div>
+                {/* children stay stacked below */}
+                <section className="mt-12">
+                    <Certis />
+                </section>
+                <section className="mt-8">
+                    <Education />
+                </section>
+            </div >
+        </div >
 
-                {/* children */}
-                <section><Certis /></section>
-                <section><Education /></section>
-                </div>
-            </div>
-        </TracingBeam>
+
     );
 }

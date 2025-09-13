@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import HoverEffect from "./Hoverit";   // your earlier component
 import ResumeDownloadButton from "./ResumeDownloadButton";
-import { TracingBeam } from "../ui/tracing-beam";
 
 export default function LandingSection() {
   const lines = [
@@ -28,53 +27,53 @@ export default function LandingSection() {
   }
 
   return (
-    <TracingBeam className="px-4">
+    <>
       <section className="min-h-screen flex items-center justify-center px-6 py-6">
         <div className="max-w-7xl w-full flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12 pl-6 md:pl-10">
-        {/* left */}
-        <div className="flex-1 md:ml-8 space-y-6 text-center md:text-left z-10">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white">
-            Hi, I'm{" "}
-            <span className="text-transparent bg-clip-text bg-slate-50 drop-shadow-[0_0_8px_#fff]">Lakshya</span>{" "}
-            <span className="inline-block animate-wave">👋</span>
-          </h1>
+          {/* left */}
+          <div className="flex-1 md:ml-8 space-y-6 text-center md:text-left z-10">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white">
+              Hi, I'm{" "}
+              <span className="text-transparent bg-clip-text bg-slate-50 drop-shadow-[0_0_8px_#fff]">Lakshya</span>{" "}
+              <span className="inline-block animate-wave">👋</span>
+            </h1>
 
-          <div className="text-lg sm:text-xl text-zinc-50 space-y-1">
-            {lines.map((line, i) => (
-              <p key={i}>{highlightWords(line)}</p>
-            ))}
+            <div className="text-lg sm:text-xl text-zinc-50 space-y-1">
+              {lines.map((line, i) => (
+                <p key={i}>{highlightWords(line)}</p>
+              ))}
+            </div>
+
+            <div className="flex flex-col sm:flex-row justify-center md:justify-start gap-4 pt-4">
+              <Link href="/#contact">
+                <span className="gradient-wrapper fire">
+                  <button className="gradient-btn">Contact Me</button>
+                </span>
+              </Link>
+              <Link href="/#projects">
+                <span className="gradient-wrapper sky">
+                  <button className="gradient-btn">Explore Projects</button>
+                </span>
+              </Link>
+              <span className="gradient-wrapper">
+                <ResumeDownloadButton />
+              </span>
+            </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row justify-center md:justify-start gap-4 pt-4">
-            <Link href="/#contact">
-              <span className="gradient-wrapper fire">
-                <button className="gradient-btn">Contact Me</button>
-              </span>
-            </Link>
-            <Link href="/#projects">
-              <span className="gradient-wrapper sky">
-                <button className="gradient-btn">Explore Projects</button>
-              </span>
-            </Link>
-            <span className="gradient-wrapper">
-              <ResumeDownloadButton />
-            </span>
+          {/* right */}
+          <div className="flex-shrink-0 w-full md:w-auto flex justify-center">
+            <Image
+              src="/mine2.jpeg"
+              width={400}
+              height={400}
+              alt="Lakshya"
+              className="h-[50vh] md:h-[75vh] w-auto object-contain rounded-3xl drop-shadow-[0_0_8px_#fff] animate-bounce-slow"
+            />
           </div>
-        </div>
-
-        {/* right */}
-        <div className="flex-shrink-0 w-full md:w-auto flex justify-center">
-          <Image
-            src="/mine2.jpeg"
-            width={400}
-            height={400}
-            alt="Lakshya"
-            className="h-[50vh] md:h-[75vh] w-auto object-contain rounded-3xl drop-shadow-[0_0_8px_#fff] animate-bounce-slow"
-          />
-        </div>
         </div>
       </section>
-      
+
       {/* Custom slow bounce animation */}
       <style jsx global>{`
         @keyframes bounce-slow {
@@ -95,6 +94,6 @@ export default function LandingSection() {
           animation: bounce-slow 3s ease-in-out infinite;
         }
       `}</style>
-    </TracingBeam>
+    </>
   );
 }

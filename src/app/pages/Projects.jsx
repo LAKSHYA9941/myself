@@ -3,9 +3,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { FiGithub, FiExternalLink } from 'react-icons/fi';
-import { SiMongodb, SiExpress, SiReact, SiTailwindcss, SiFirebase, SiTypescript } from 'react-icons/si';
+import { SiMongodb, SiExpress, SiReact, SiTailwindcss, SiFirebase, SiTypescript, SiJavascript } from 'react-icons/si';
 import Image from 'next/image';
-import { TracingBeam } from '../ui/tracing-beam';
 
 const projects = [
   {
@@ -65,67 +64,70 @@ const projects = [
   },
   {
     name: 'Tokenizer',
-    tagline: 'Fast subword tokenizer with custom vocabulary and visualization.',
-    live: undefined,
+    tagline: 'Self made Tokenizer with custom vocabulary and visualization.',
+    live: 'https://tokanization.netlify.app',
     repo: undefined,
     stack: [
-      { icon: <SiTypescript className="text-[#3178C6]" />, name: 'TypeScript' },
+      { icon: <SiJavascript className="text-[#F7DF1E]" />, name: 'JavaScript' },
       { icon: <SiReact className="text-[#61DAFB]" />, name: 'React' },
     ],
     bullets: [
-      'BPE/WordPiece style training and export',
-      'Web UI to compare tokenization strategies',
-      'Benchmarking mode with sample corpora',
+      'The first assignment of Genai Cohort organized by Chai-code',
+      'Shows the working of text embedding models',
+      'Visualizes tokenization and embeddings',
     ],
-    image: 'https://res.cloudinary.com/cloud4lakshya/image/upload/v1754839922/currency_converter_mns6dg.png',
+    image: 'https://res.cloudinary.com/cloud4lakshya/image/upload/v1757793070/Screenshot_93_okxrqq.png',
   },
   {
     name: 'Persona AI',
     tagline: 'Multi-persona conversational assistant with memory and tools.',
-    live: undefined,
+    live: 'https://personaai-1tda.onrender.com',
     repo: undefined,
     stack: [
       { icon: <SiReact className="text-[#61DAFB]" />, name: 'React' },
       { icon: <SiTailwindcss className="text-[#06B6D4]" />, name: 'Tailwind CSS' },
     ],
     bullets: [
-      'Programmable personas and guardrails',
-      'Context memory and prompt templates',
+      'Created a multi-persona conversational assistant',
+      'Persona of :- Hitesh sir , Piyush Sir , Myself',
+      'Memory and prompt templates',
       'Tool usage and persona switching',
+      'If not working(Key might be revoked)'
     ],
-    image: 'https://res.cloudinary.com/cloud4lakshya/image/upload/v1754839921/chaiproject_bnylai.png',
+    image: 'https://res.cloudinary.com/cloud4lakshya/image/upload/v1757794076/Screenshot_94_ya1nzh.png',
   },
   {
     name: 'Thumbnail AI',
-    tagline: 'AI-powered YouTube thumbnail ideation and generation pipeline.',
-    live: undefined,
+    tagline: 'AI-powered YouTube thumbnail generator',
+    live: 'https://thumnail-ai.vercel.app',
     repo: undefined,
     stack: [
       { icon: <SiReact className="text-[#61DAFB]" />, name: 'React' },
       { icon: <SiTailwindcss className="text-[#06B6D4]" />, name: 'Tailwind CSS' },
     ],
     bullets: [
-      'Prompted design variants with ranking',
-      'Guided composition overlays',
-      'Export and SVG-to-PNG rasterization',
+      'Chained Voice agent Prompt generation for better results',
+      'Prompt improvement feature',
+      'Creates Thumbnails like a pro designer ',
+      'Works like a charm for Beginner Youtubers',
+      'If not working(Work in progress...)'
     ],
-    image: '/chaiproject.png',
+    image: 'https://res.cloudinary.com/cloud4lakshya/image/upload/v1757794232/Screenshot_95_wv8jcd.png',
   },
   {
     name: 'Site Cloner Tool',
     tagline: 'Browser-based site snapshotter and component extractor.',
     live: undefined,
-    repo: undefined,
+    repo: 'https://github.com/LAKSHYA9941/site_cloner',
     stack: [
-      { icon: <SiTypescript className="text-[#3178C6]" />, name: 'TypeScript' },
-      { icon: <SiReact className="text-[#61DAFB]" />, name: 'React' },
+      { icon: <SiJavascript className="text-[#F7DF1E]" />, name: 'JavaScript' },
     ],
     bullets: [
       'Parses DOM into reusable component blocks',
       'Downloads assets and resolves dependencies',
       'One-click export of component library',
     ],
-    image: 'https://res.cloudinary.com/cloud4lakshya/image/upload/v1754839921/chaiproject_bnylai.png',
+    image: 'https://res.cloudinary.com/cloud4lakshya/image/upload/v1757794941/cloner_qbcnop.jpg',
   },
   {
     name: 'Browser Agent',
@@ -141,7 +143,7 @@ const projects = [
       'Navigation, scraping, and form-filling',
       'Replayable trajectories and logs',
     ],
-    image: '/techsvg.svg',
+    image: 'https://res.cloudinary.com/cloud4lakshya/image/upload/v1757795276/step-05-fillform_ksykjg.jpg',
   },
   {
     name: 'Simple RAG',
@@ -157,10 +159,10 @@ const projects = [
       'Citations with source highlighting',
       'Dataset upload and indexing UI',
     ],
-    image: '/currency_converter.png',
+    image: 'https://res.cloudinary.com/cloud4lakshya/image/upload/v1757795499/Screenshot_96_e6exxi.png',
   },
   {
-    name: "Company RAG FT",
+    name: "RAG F.T. for Chaicode",
     tagline: "Fine-tuned RAG over a company's knowledge base.",
     live: undefined,
     repo: undefined,
@@ -170,10 +172,13 @@ const projects = [
     ],
     bullets: [
       'Domain-specific reranking and prompt calibration',
-      'Access control and anonymization',
-      'Evaluation dashboard and traces',
+      'Admin panel for dataset management',
+      'Dashboard for tracking metrics',
+      'Sleek frontend with dark colors',
+      'Qdrant DB for vector storage',
+      'Zustand state management',
     ],
-    image: '/notemakeimg.jpeg',
+    image: 'https://res.cloudinary.com/cloud4lakshya/image/upload/v1757795610/Screenshot_98_bfaeaw.png',
   },
 ];
 
@@ -242,22 +247,20 @@ const Card = ({ p, index }) => (
 /* ---------- main page ---------- */
 const Projects = () => {
   return (
-    <TracingBeam className="px-4">
-      <div className="relative min-h-screen overflow-hidden">
-        <section className="max-w-7xl mx-auto px-4 py-10 space-y-16 pl-6 md:pl-10">
-          <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">My Projects</h1>
-            <p className="text-slate-300 max-w-2xl mx-auto">
-              Here are some projects I've built, from full-stack web apps to AI-powered tools. 
-              Each one taught me something new about shipping quality software.
-            </p>
-          </div>
-          {projects.map((p, idx) => (
-            <Card key={p.name} p={p} index={idx} />
-          ))}
-        </section>
-      </div>
-    </TracingBeam>
+    <div className="relative min-h-screen overflow-hidden">
+      <section className="max-w-7xl mx-auto px-4 py-10 space-y-16 pl-6 md:pl-10">
+        <div className="text-center mb-12">
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">My Projects</h1>
+          <p className="text-slate-300 max-w-2xl mx-auto">
+            Here are some projects I've built, from full-stack web apps to AI-powered tools.
+            Each one taught me something new about shipping quality software.
+          </p>
+        </div>
+        {projects.map((p, idx) => (
+          <Card key={p.name} p={p} index={idx} />
+        ))}
+      </section>
+    </div>
   );
 }
 

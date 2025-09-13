@@ -5,10 +5,15 @@ export default function SmoothScrollProvider({ children }) {
   useEffect(() => {
     let lenis = null;
     let rafId = null;
-    const prefersReducedMotion = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let isRunning = false;
+
+    const prefersReducedMotion =
+      typeof window !== "undefined" &&
+      window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     if (prefersReducedMotion) {
-      // Skip Lenis to honor user preference and reduce CPU.
+      // Honor accessibility preference and skip smooth scrolling
       return () => {};
     }
 
@@ -17,44 +22,65 @@ export default function SmoothScrollProvider({ children }) {
         const mod = await import("@studio-freight/lenis");
         const Lenis = mod.default || mod;
         lenis = new Lenis({
-          duration: 0.5,
+          duration: 0.7, // feels smoother & snappier
           smoothWheel: true,
           smoothTouch: false,
           gestureOrientation: "vertical",
-          easing: (t) => t, // linear easing = cheaper
-          autoRaf: false, // we’ll run our own RAF loop only when needed
+          easing: (t) => 1 - Math.pow(2, -10 * t), // easeOutExpo for a nice snap
+          autoRaf: false,
         });
 
-        // Expose globally for in-page anchor navigation helpers
-        try { window.lenis = lenis; } catch {}
+        // Expose globally for debugging / manual control
+        try {
+          window.lenis = lenis;
+        } catch {}
 
         const raf = (time) => {
           lenis?.raf(time);
           rafId = requestAnimationFrame(raf);
         };
-        rafId = requestAnimationFrame(raf);
 
-        const onVis = () => {
-          if (document.hidden) {
-            if (rafId) cancelAnimationFrame(rafId);
-            rafId = null;
-          } else {
-            if (!rafId) rafId = requestAnimationFrame(raf);
+        // Start RAF only when needed
+        const startRaf = () => {
+          if (!isRunning) {
+            isRunning = true;
+            rafId = requestAnimationFrame(raf);
           }
         };
-        document.addEventListener('visibilitychange', onVis);
+
+        const stopRaf = () => {
+          if (rafId) cancelAnimationFrame(rafId);
+          rafId = null;
+          isRunning = false;
+        };
+
+        // Detect scroll activity to start/stop raf
+        lenis.on("scroll", () => startRaf());
+
+        // Visibility optimization
+        const onVis = () => {
+          if (document.hidden) {
+            stopRaf();
+          } else {
+            startRaf();
+          }
+        };
+        document.addEventListener("visibilitychange", onVis);
 
         // Clean up visibility listener on unmount
-        return () => document.removeEventListener('visibilitychange', onVis);
+        return () => {
+          document.removeEventListener("visibilitychange", onVis);
+        };
       } catch (e) {
-        // Lenis not installed yet; no-op fallback
-        // Scrolling will still work normally.
+        // Lenis not installed yet; fail silently
       }
     })();
 
     return () => {
       if (rafId) cancelAnimationFrame(rafId);
-      try { lenis?.destroy?.(); } catch {}
+      try {
+        lenis?.destroy?.();
+      } catch {}
     };
   }, []);
 
