@@ -50,7 +50,7 @@ export const BackgroundGradientAnimation = React.forwardRef(function BackgroundG
       {/* Layered animated gradient glows */}
       <div
         aria-hidden
-        className="pointer-events-none absolute -inset-[20%] opacity-45 blur-3xl will-change-transform"
+        className="pointer-events-none absolute -inset-[20%] opacity-45 blur-2xl will-change-transform"
         style={{
           background:
             "radial-gradient(40vw 40vh at var(--mx) var(--my), var(--c1), transparent 60%), radial-gradient(35vw 35vh at 80% 20%, var(--c2), transparent 70%)",
@@ -61,7 +61,7 @@ export const BackgroundGradientAnimation = React.forwardRef(function BackgroundG
 
       <div
         aria-hidden
-        className="pointer-events-none absolute -inset-[30%] opacity-35 blur-3xl will-change-transform"
+        className="pointer-events-none absolute -inset-[30%] opacity-35 blur-2xl will-change-transform"
         style={{
           background:
             "radial-gradient(50vw 50vh at 20% 80%, var(--c3), transparent 65%), radial-gradient(45vw 45vh at 70% 70%, var(--c2), transparent 60%)",
@@ -72,7 +72,7 @@ export const BackgroundGradientAnimation = React.forwardRef(function BackgroundG
 
       <div
         aria-hidden
-        className="pointer-events-none absolute -inset-[40%] opacity-25 blur-2xl will-change-transform"
+        className="pointer-events-none absolute -inset-[40%] opacity-25 blur-xl will-change-transform"
         style={{
           background:
             "radial-gradient(60vw 60vh at 50% 50%, var(--c4), transparent 70%)",

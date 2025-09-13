@@ -1,6 +1,6 @@
 "use client";
 // Techstack.jsx
-import React, { useRef } from 'react';
+import React, { useMemo, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
@@ -69,10 +69,10 @@ const Logo = ({ src, color, name }) => (
 /* ---------- Pre-filled Strip (no blank space) ---------- */
 const Strip = ({ direction, logos }) => {
     const stripRef = useRef(null);
-    // mirror the list so the strip is full on first paint
-    const mirrored = [...logos, ...logos, ...logos, ...logos];
+    // mirror the list so the strip is full on first paint (reduced duplicates for performance)
+    const mirrored = useMemo(() => [...logos, ...logos], [logos]);
 
-    const LOGO_W = 96;
+    const LOGO_W = 88;
     const GAP = 32;
     const distance = mirrored.length * (LOGO_W + GAP);
 
@@ -88,17 +88,21 @@ const Strip = ({ direction, logos }) => {
 
         const pause = () => tl.pause();
         const play = () => tl.play();
-        stripRef.current.addEventListener('mouseenter', pause);
-        stripRef.current.addEventListener('mouseleave', play);
-        return () => tl.kill();
+        const el = stripRef.current;
+        el.addEventListener('mouseenter', pause);
+        el.addEventListener('mouseleave', play);
+        return () => {
+            el.removeEventListener('mouseenter', pause);
+            el.removeEventListener('mouseleave', play);
+            tl.kill();
+        };
     }, [direction, distance]);
 
     return (
         <div className="w-full h-40 md:h-48 overflow-hidden py-4 md:py-6">
             <div
                 ref={stripRef}
-                className="flex whitespace-nowrap"
-                style={{ width: direction === 'rtl' ? '400%' : '400%' }}
+                className="flex whitespace-nowrap will-change-transform"
             >
                 {mirrored.map((t, i) => (
                     <Logo key={`${direction}-${t.name}-${i}`} src={t.file} color={t.color} name={t.name} />

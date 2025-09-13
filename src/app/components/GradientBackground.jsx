@@ -55,20 +55,30 @@ export default function GradientBackground() {
       });
     });
 
-    // Pointer parallax for gradient focal point
-    const move = (e) => {
-      const x = (e.clientX / window.innerWidth) * 100;
-      const y = (e.clientY / window.innerHeight) * 100;
-      gsap.to(el, { "--mx": `${x}%`, "--my": `${y}%`, duration: 0.5, ease: "power2.out" });
-    };
-    window.addEventListener("pointermove", move);
+    // Pointer parallax for gradient focal point (throttled & disabled on touch/reduced-motion)
+    const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let onMove = null;
+    if (!isTouch && !prefersReduced) {
+      const state = { x: 50, y: 50, raf: null };
+      onMove = (e) => {
+        state.x = (e.clientX / window.innerWidth) * 100;
+        state.y = (e.clientY / window.innerHeight) * 100;
+        if (state.raf) return;
+        state.raf = requestAnimationFrame(() => {
+          state.raf = null;
+          gsap.to(el, { "--mx": `${state.x}%`, "--my": `${state.y}%`, duration: 0.25, ease: "power2.out", overwrite: 'auto' });
+        });
+      };
+      window.addEventListener("pointermove", onMove, { passive: true });
+    }
 
     // Initial palette
     setPalette("home");
 
     return () => {
       triggers.forEach((t) => t.kill());
-      window.removeEventListener("pointermove", move);
+      if (onMove) window.removeEventListener("pointermove", onMove);
     };
   }, []);
 

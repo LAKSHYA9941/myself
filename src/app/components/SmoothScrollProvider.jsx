@@ -9,13 +9,19 @@ export default function SmoothScrollProvider({ children }) {
   useEffect(() => {
     let lenis = null;
     let rafId = null;
+    const prefersReducedMotion = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (prefersReducedMotion) {
+      // Skip Lenis to honor user preference and reduce CPU.
+      return () => {};
+    }
 
     (async () => {
       try {
         const mod = await import("@studio-freight/lenis");
         const Lenis = mod.default || mod;
         lenis = new Lenis({
-          duration: 1.1,
+          duration: 0.9,
           smoothWheel: true,
           smoothTouch: false,
           gestureOrientation: "vertical",
@@ -32,6 +38,19 @@ export default function SmoothScrollProvider({ children }) {
           rafId = requestAnimationFrame(raf);
         };
         rafId = requestAnimationFrame(raf);
+
+        const onVis = () => {
+          if (document.hidden) {
+            if (rafId) cancelAnimationFrame(rafId);
+            rafId = null;
+          } else {
+            if (!rafId) rafId = requestAnimationFrame(raf);
+          }
+        };
+        document.addEventListener('visibilitychange', onVis);
+
+        // Clean up visibility listener on unmount
+        return () => document.removeEventListener('visibilitychange', onVis);
       } catch (e) {
         // Lenis not installed yet; no-op fallback
         // Scrolling will still work normally.
