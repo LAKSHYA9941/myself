@@ -96,7 +96,7 @@ export default function Techstack() {
         <div className="z-10 w-full max-w-7xl mx-auto px-6">
           {/* animated gradient title */}
           <div className="flex flex-col items-center justify-center py-10 text-center">
-            <h1 className="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 ">
+            <h1 className="text-4xl md:text-5xl font-extrabold text-white ">
               Techstack
             </h1>
             <p className="text-slate-300 max-w-3xl mt-3">
@@ -113,8 +113,8 @@ export default function Techstack() {
 
           {/* AI section with glow title */}
           <div className="flex items-center justify-center py-8">
-            <h2 className="text-2xl md:text-3xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 animate-pulse">
-              AI · Agents · RAG
+            <h2 className="text-2xl md:text-4xl font-semibold text-white">
+              AI Stack
             </h2>
           </div>
           <div className="animate-fadeInUp stagger-200">

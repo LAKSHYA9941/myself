@@ -124,55 +124,55 @@ export default function Skills() {
   ];
 
   return (
-    <div className="max-w-5xl mx-auto antialiased pt-4 relative pl-6 md:pl-10">
-      {/* Skills Summary at the top */}
-      <div className="mb-16">
-        <h2 className="text-4xl font-bold text-center text-white mb-6">My Skills</h2>
-        <p className="text-center text-slate-300 mb-8 max-w-3xl mx-auto">
-          A comprehensive overview of technologies and skills I work with daily
-        </p>
+    <div className="max-w-5xl mx-auto antialiased pt-4 w-full px-6 md:px-10 z-10">
+        {/* Skills Summary at the top */}
+        <div className="mb-16">
+          <h2 className="text-4xl font-bold text-center text-white mb-6">My Skills</h2>
+          <p className="text-center text-slate-300 mb-8 max-w-3xl mx-auto">
+            A comprehensive overview of technologies and skills I work with daily
+          </p>
 
-        {/* Major Skills Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-          {majorSkills.map((skill, index) => (
-            <div
-              key={skill}
-              className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 backdrop-blur-sm border border-slate-600 rounded-xl p-8 text-center hover:from-slate-700/80 hover:to-slate-800/80 transition-all duration-300 hover:scale-105 hover:border-slate-500"
-            >
-              <span className="text-slate-100 font-bold text-xl">{skill}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Journey Timeline below */}
-      <div className="mb-8">
-        <h2 className="text-3xl font-bold text-center text-white mb-4">My Journey</h2>
-        <p className="text-center text-slate-300 mb-3">
-          How I grew from frontend → backend → fullstack → fullstack AI developer
-        </p>
-        <p className="text-center text-slate-400 mb-10 text-sm max-w-3xl mx-auto">
-          I care about clean UI, honest performance, and shipping things that people actually use.
-          Here's the path I took and what I'm focusing on next.
-        </p>
-      </div>
-
-      {stages.map((s, index) => (
-        <div key={`content-${index}`} className="mb-10">
-          <h2 className="bg-black text-white rounded-full text-sm w-fit px-4 py-1 mb-4">
-            {s.emoji} {s.title}
-          </h2>
-          <p className="text-xl mb-4 font-semibold text-white">{s.title}</p>
-          <div className="text-sm prose prose-sm dark:prose-invert text-slate-300">
-            <p className="mb-2">{s.blurb}</p>
-            <ul className="list-disc list-inside space-y-1">
-              {s.points.map((p) => (
-                <li key={p}>{p}</li>
-              ))}
-            </ul>
+          {/* Major Skills Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+            {majorSkills.map((skill, index) => (
+              <div
+                key={skill}
+                className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 backdrop-blur-sm border border-slate-600 rounded-xl p-8 text-center hover:from-slate-700/80 hover:to-slate-800/80 transition-all duration-300 hover:scale-105 hover:border-slate-500"
+              >
+                <span className="text-slate-100 font-bold text-xl">{skill}</span>
+              </div>
+            ))}
           </div>
         </div>
-      ))}
+
+        {/* Journey Timeline below */}
+        <div className="mb-8">
+          <h2 className="text-3xl font-bold text-center text-white mb-4">My Journey</h2>
+          <p className="text-center text-slate-300 mb-3">
+            How I grew from frontend → backend → fullstack → fullstack AI developer
+          </p>
+          <p className="text-center text-slate-400 mb-10 text-sm max-w-3xl mx-auto">
+            I care about clean UI, honest performance, and shipping things that people actually use.
+            Here's the path I took and what I'm focusing on next.
+          </p>
+        </div>
+
+        {stages.map((s, index) => (
+          <div key={`content-${index}`} className="mb-10">
+            <h2 className="bg-black text-white rounded-full text-sm w-fit px-4 py-1 mb-4">
+              {s.emoji} {s.title}
+            </h2>
+            <p className="text-xl mb-4 font-semibold text-white">{s.title}</p>
+            <div className="text-sm prose prose-sm dark:prose-invert text-slate-300">
+              <p className="mb-2">{s.blurb}</p>
+              <ul className="list-disc list-inside space-y-1">
+                {s.points.map((p) => (
+                  <li key={p}>{p}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        ))}
     </div>
   );
 }

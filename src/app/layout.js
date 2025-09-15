@@ -1,5 +1,4 @@
 "use client";
-import Navbar from "./components/Navbar";
 import './globals.css'
 import SmoothScrollProvider from "./components/SmoothScrollProvider";
 
@@ -7,12 +6,15 @@ import SmoothScrollProvider from "./components/SmoothScrollProvider";
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>
+      <body className="bg-black">
         <SmoothScrollProvider>
-          <Navbar />
+
+
+
           {children}
+
+
         </SmoothScrollProvider>
-        
       </body>
     </html>
   );

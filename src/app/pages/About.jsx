@@ -17,7 +17,7 @@ export default function About() {
     ];
 
     return (
-        <div className="min-h-screen text-white flex flex-col justify-center">
+        <div className="min-h-screen text-white flex flex-col justify-center z-10">
             {/* heading stays centred */}
             <h1 className="text-3xl font-bold border-b border-white/20 pb-2 text-center">
                 About Me

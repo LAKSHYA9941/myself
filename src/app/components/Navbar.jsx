@@ -12,6 +12,7 @@ function Navbar() {
   const bar3 = useRef(null);
   const drawer = useRef(null);
   const [active, setActive] = useState('home');
+  const ratiosRef = useRef({});
 
   const links = [
     { path: 'about',     label: 'About' },
@@ -37,21 +38,56 @@ function Navbar() {
 
   // Observe sections to highlight active link
   useEffect(() => {
-    const sections = links.map(l => document.getElementById(l.path)).filter(Boolean);
-    const home = document.getElementById('home');
-    const all = home ? [home, ...sections] : sections;
-    if (!all.length) return;
+    const allTopSections = Array.from(document.querySelectorAll('main > section[id]'));
+    const sections = allTopSections.filter(sec => links.some(l => l.path === sec.id));
+    if (!sections.length) return;
+
+    // initialize ratios map
+    ratiosRef.current = Object.fromEntries(sections.map(s => [s.id, 0]));
+
+    // set initial active based on closest to viewport center
+    const pickByCenter = () => {
+      const centerY = window.innerHeight / 2;
+      let bestId = null;
+      let bestDist = Infinity;
+      sections.forEach(sec => {
+        const rect = sec.getBoundingClientRect();
+        const secCenter = rect.top + rect.height / 2;
+        const dist = Math.abs(secCenter - centerY);
+        if (dist < bestDist) {
+          bestDist = dist;
+          bestId = sec.id;
+        }
+      });
+      if (bestId) setActive(bestId);
+    };
+    pickByCenter();
 
     const observer = new IntersectionObserver(
       (entries) => {
-        const visible = entries
-          .filter(e => e.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-        if (visible?.target?.id) setActive(visible.target.id);
+        entries.forEach(e => {
+          const id = e.target.id;
+          if (!id) return;
+          ratiosRef.current[id] = e.isIntersecting ? e.intersectionRatio : 0;
+        });
+        let bestId = null;
+        let bestRatio = -1;
+        for (const id of Object.keys(ratiosRef.current)) {
+          const r = ratiosRef.current[id] ?? 0;
+          if (r > bestRatio) {
+            bestRatio = r;
+            bestId = id;
+          }
+        }
+        if (bestId) setActive(bestId);
       },
-      { root: null, threshold: [0.4, 0.6, 0.8] }
+      {
+        root: null,
+        threshold: [0, 0.1, 0.25, 0.5, 0.75, 0.9, 1],
+        rootMargin: '-45% 0px -45% 0px',
+      }
     );
-    all.forEach(s => observer.observe(s));
+    sections.forEach(s => observer.observe(s));
     return () => observer.disconnect();
   }, []);
 

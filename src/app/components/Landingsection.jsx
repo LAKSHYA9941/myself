@@ -55,7 +55,7 @@ export default function LandingSection() {
                   <button className="gradient-btn">Explore Projects</button>
                 </span>
               </Link>
-              <span className="gradient-wrapper">
+              <span className="gradient-wrapper cyan">
                 <ResumeDownloadButton />
               </span>
             </div>
@@ -68,7 +68,7 @@ export default function LandingSection() {
               width={400}
               height={400}
               alt="Lakshya"
-              className="h-[50vh] md:h-[75vh] w-auto object-contain rounded-3xl drop-shadow-[0_0_8px_#fff] animate-bounce-slow"
+              className="h-[50vh] md:h-[75vh] w-auto object-contain rounded-3xl drop-shadow-[0_0_8px_#fff] "
             />
           </div>
         </div>

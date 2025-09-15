@@ -96,6 +96,9 @@ section[id] {
 .gradient-wrapper.sky {
   background: linear-gradient(90deg, #aed2ff, #344cb7, #577bc1, #ffeb00);
 }
+.gradient-wrapper.cyan {
+  background: linear-gradient(90deg, #ff00ea, #ff0000, #00fffb);
+}
 
 .gradient-wrapper::before {
   content: "";
@@ -118,3 +121,4 @@ section[id] {
   filter: blur(0.2em);
   opacity: 1;
 }
+

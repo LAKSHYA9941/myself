@@ -24,7 +24,7 @@ export default function Contacts() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row">
+    <div className="min-h-screen flex flex-col md:flex-row z-10">
       {/* LEFT: image side (hidden on mobile) */}
       <div className="hidden md:flex md:flex-1 items-center justify-center p-8">
         <div className="w-full max-h-[500px] rounded-2xl overflow-hidden">

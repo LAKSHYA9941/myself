@@ -245,8 +245,8 @@ const Card = ({ p, index }) => (
 /* ---------- main page ---------- */
 const Projects = () => {
   return (
-    <div className="relative min-h-screen overflow-hidden">
-      <section className="max-w-7xl mx-auto px-4 py-10 space-y-16 pl-6 md:pl-10">
+    <div className="relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6 md:px-10 py-10 space-y-16">
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">My Projects</h1>
           <p className="text-slate-300 max-w-2xl mx-auto">
@@ -257,7 +257,7 @@ const Projects = () => {
         {projects.map((p, idx) => (
           <Card key={p.name} p={p} index={idx} />
         ))}
-      </section>
+      </div>
     </div>
   );
 }
