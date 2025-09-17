@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import emailjs from 'emailjs-com';
 import { User, Mail, MessageSquare, Send } from 'lucide-react';
+import Button from '../components/Socials';
 
 export default function Contacts() {
   const [form, setForm] = useState({ name: '', email: '', message: '' });
@@ -117,6 +118,8 @@ export default function Contacts() {
               <Send className="w-5 h-5" />
               {status === 'Sending…' ? 'Sending…' : 'Send Message'}
             </button>
+            <span className=" pt-4"> <Button /></span>
+
 
             {status && <p className="text-center text-sm text-neutral-300 pt-2">{status}</p>}
           </form>

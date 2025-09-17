@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import HoverEffect from "./Hoverit";   // your earlier component
 import ResumeDownloadButton from "./ResumeDownloadButton";
-
 export default function LandingSection() {
   const lines = [
     "I'm a full-stack AI developer",
@@ -70,6 +69,9 @@ export default function LandingSection() {
               alt="Lakshya"
               className="h-[50vh] md:h-[75vh] w-auto object-contain rounded-3xl drop-shadow-[0_0_8px_#fff] "
             />
+
+
+
           </div>
         </div>
       </section>

@@ -7,7 +7,7 @@ import React from "react";
   - Attempts to download /resume.pdf from public/ when available
   - Safe default: if the file is missing, shows an alert instead of breaking UI
 */
-export default function ResumeDownloadButton({ filePath = "/resume.pdf" }) {
+export default function ResumeDownloadButton({ filePath = "/nodejs.svg" }) {
   const handleDownload = async () => {
     const ok = typeof window !== "undefined" && window.confirm("Download resume to your device?");
     if (!ok) return;
@@ -19,7 +19,7 @@ export default function ResumeDownloadButton({ filePath = "/resume.pdf" }) {
 
       const a = document.createElement("a");
       a.href = filePath;
-      a.download = filePath.split("/").pop() || "resume.pdf";
+      a.download = filePath.split("/").pop() || "nodejs.svg";
       document.body.appendChild(a);
       a.click();
       a.remove();
